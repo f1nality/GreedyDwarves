@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     baseunit.cpp \
     warriorunit.cpp \
     swordsman.cpp \
-    gamecanvas.cpp
+    gamecanvas.cpp \
+    gamelogic.cpp
 
 HEADERS  += mainwindow.h \
     gameunit.h \
@@ -29,7 +30,8 @@ HEADERS  += mainwindow.h \
     baseunit.h \
     warriorunit.h \
     swordsman.h \
-    gamecanvas.h
+    gamecanvas.h \
+    gamelogic.h
 
 FORMS    += mainwindow.ui
 

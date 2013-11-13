@@ -7,7 +7,8 @@ class MovableUnit : public GameUnit
 {
 public:
     MovableUnit();
-private:
+    void move();
+protected:
     float speed;
 };
 

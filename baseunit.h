@@ -7,7 +7,7 @@ class BaseUnit : public StaticUnit
 {
 public:
     BaseUnit();
-private:
+protected:
     int healthPoints;
     int level;
 };

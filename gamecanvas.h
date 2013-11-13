@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QPainter>
+#include <QImage>
 
 class GameCanvas : public QWidget
 {

@@ -7,7 +7,7 @@ class WarriorUnit : public MovableUnit
 {
 public:
     WarriorUnit();
-private:
+protected:
     int healthPoints;
 };
 
