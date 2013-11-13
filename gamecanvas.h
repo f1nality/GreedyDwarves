@@ -9,7 +9,6 @@ class GameCanvas : public QWidget
 {
     Q_OBJECT
 public:
-    float position;
     explicit GameCanvas(QWidget *parent = 0);
 protected:
     void paintEvent(QPaintEvent *);

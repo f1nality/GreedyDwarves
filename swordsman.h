@@ -8,6 +8,8 @@ class SwordsMan : public WarriorUnit
 public:
     SwordsMan();
     SwordsMan(float x, float y);
+private:
+    void Initialize();
 };
 
 #endif // SWORDSMAN_H

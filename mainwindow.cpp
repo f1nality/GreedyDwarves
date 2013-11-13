@@ -7,6 +7,8 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    this->setFixedSize(640, 240);
+
     gameCanvas = new GameCanvas();
 
     this->setCentralWidget(gameCanvas);
@@ -26,6 +28,5 @@ MainWindow::~MainWindow()
 
 void MainWindow::onTimeout()
 {
-    gameCanvas->position++;
     gameCanvas->repaint();
 }
