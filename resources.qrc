@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/graphics">
-        <file>img.png</file>
-        <file>background.png</file>
+        <file alias="background.png">graphics/background.png</file>
+        <file alias="swordsman.png">graphics/swordsman.png</file>
     </qresource>
 </RCC>
