@@ -1,5 +1,5 @@
 #include "gamelogic.h"
-
+#include "baseunit.h"
 GameLogic::GameLogic()
 {
     QObject::connect(&gameTimer, SIGNAL(timeout()), this, SLOT(unitOfTimeElapsed()));
@@ -7,7 +7,8 @@ GameLogic::GameLogic()
     gameTimer.setInterval(50);
     gameTimer.start();
 
-    this->gameUnits.append(new SwordsMan());
+    this->gameUnits.append(new BaseUnit(10, -10));
+    this->gameUnits.append(new SwordsMan(100, 0));
 }
 
 QList<GameUnit *> GameLogic::getGameUnits()

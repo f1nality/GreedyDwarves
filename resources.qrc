@@ -2,5 +2,6 @@
     <qresource prefix="/graphics">
         <file alias="background.png">graphics/background.png</file>
         <file alias="swordsman.png">graphics/swordsman.png</file>
+        <file alias="house.png">graphics/house.png</file>
     </qresource>
 </RCC>

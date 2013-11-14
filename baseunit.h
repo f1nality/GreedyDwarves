@@ -7,6 +7,9 @@ class BaseUnit : public StaticUnit
 {
 public:
     BaseUnit();
+    BaseUnit(float x, float y);
+private:
+    void Initialize();
 protected:
     int healthPoints;
     int level;
