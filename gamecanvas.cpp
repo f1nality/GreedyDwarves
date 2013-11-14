@@ -2,12 +2,15 @@
 #include "gamelogic.h"
 #include "swordsman.h"
 
-GameLogic *gameLogic = new GameLogic();
-
 GameCanvas::GameCanvas(QWidget *parent) :
     QWidget(parent)
 {
-    gameLogic->gameUnits.append(new SwordsMan(10, 160));
+    ROAD_Y = 195;
+}
+
+void GameCanvas::setGameLogic(GameLogic *gameLogic)
+{
+    this->gameLogic = gameLogic;
 }
 
 void GameCanvas::paintEvent(QPaintEvent *)
@@ -16,10 +19,14 @@ void GameCanvas::paintEvent(QPaintEvent *)
 
     painter.drawImage(0, 0, QImage(":/graphics/background.png"), 0, 0, -1, -1, 0);
 
-    foreach (GameUnit *unit, gameLogic->gameUnits)
+    foreach (GameUnit *unit, gameLogic->getGameUnits())
     {
-        painter.drawImage((int)unit->getX(), (int)unit->getY(), *unit->getImage(), unit->getCurrentFrame() * 32, 0, unit->getWidth(), unit->getHeight(), 0);
+        painter.drawImage((int)unit->getX(), ROAD_Y - unit->getHeight() - (int)unit->getY(), *unit->getImage(), unit->getCurrentFrame() * 32, 0, unit->getWidth(), unit->getHeight(), 0);
     }
-
-    gameLogic->ProcessEvents();
 }
+
+void GameCanvas::onGameUpdated()
+{
+    repaint();
+}
+

@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QTimer>
+#include "gamelogic.h"
 #include "gamecanvas.h"
 
 namespace Ui {
@@ -16,12 +16,10 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-    
 private:
     Ui::MainWindow *ui;
     GameCanvas *gameCanvas;
-private slots:
-    void onTimeout();
+    void InitializeGame();
 };
 
 #endif // MAINWINDOW_H

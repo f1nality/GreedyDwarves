@@ -6,19 +6,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
     this->setFixedSize(640, 240);
 
-    gameCanvas = new GameCanvas();
-
-    this->setCentralWidget(gameCanvas);
-
-    QTimer *timer = new QTimer();
-
-    QObject::connect(timer, SIGNAL(timeout()), this, SLOT(onTimeout()));
-
-    timer->setInterval(50);
-    timer->start();
+    InitializeGame();
 }
 
 MainWindow::~MainWindow()
@@ -26,7 +16,14 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::onTimeout()
+void MainWindow::InitializeGame()
 {
-    gameCanvas->repaint();
+    GameLogic *gameLogic = new GameLogic();
+
+    gameCanvas = new GameCanvas();
+    gameCanvas->setGameLogic(gameLogic);
+
+    QObject::connect(gameLogic, SIGNAL(GameUpdated()), gameCanvas, SLOT(onGameUpdated()));
+
+    this->setCentralWidget(gameCanvas);
 }
