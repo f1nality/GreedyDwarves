@@ -21,7 +21,7 @@ void GameCanvas::paintEvent(QPaintEvent *)
 
     foreach (GameUnit *unit, gameLogic->getGameUnits())
     {
-        painter.drawImage((int)unit->getX(), ROAD_Y - unit->getHeight() - (int)unit->getY(), *unit->getImage(), unit->getCurrentFrame() * 32, 0, unit->getWidth(), unit->getHeight(), 0);
+        painter.drawImage((int)unit->getX(), ROAD_Y - unit->getHeight() - (int)unit->getY(), *unit->getImage(), unit->getCurrentFrame() * unit->getWidth(), 0, unit->getWidth(), unit->getHeight(), 0);
     }
 }
 

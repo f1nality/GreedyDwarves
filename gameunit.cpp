@@ -16,7 +16,7 @@ float GameUnit::getY()
     return this->y;
 }
 
-QImage * GameUnit::getImage()
+QImage *GameUnit::getImage()
 {
     return this->image;
 }
