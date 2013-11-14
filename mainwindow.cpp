@@ -8,6 +8,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     this->setFixedSize(640, 240);
 
+    setWindowFlags(windowFlags() & ~Qt::WindowMaximizeButtonHint);
+
     InitializeGame();
 }
 

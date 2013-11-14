@@ -17,8 +17,10 @@ public:
 protected:
     float x, y;
     QImage *image;
-    QSize imageSize;
+    QSize frameSize;
     size_t frames;
+    size_t timePerFrame;
+    size_t timeSinceCurrentFrame;
     size_t currentFrame;
 };
 

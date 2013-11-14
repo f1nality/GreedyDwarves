@@ -16,8 +16,9 @@ SwordsMan::SwordsMan(float x, float y)
 void SwordsMan::Initialize()
 {
     this->image = new QImage(":/graphics/img.png");
-    this->imageSize = QSize(32, 32);
+    this->frameSize = QSize(32, 32);
     this->frames = 6;
+    this->timePerFrame = 2;
     this->speed = 1;
 }
 

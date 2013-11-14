@@ -3,6 +3,7 @@
 GameUnit::GameUnit()
 {
     this->currentFrame = 0;
+    this->timeSinceCurrentFrame = 0;
 }
 
 float GameUnit::getX()
@@ -22,12 +23,12 @@ QImage * GameUnit::getImage()
 
 int GameUnit::getWidth()
 {
-    return this->imageSize.width();
+    return this->frameSize.width();
 }
 
 int GameUnit::getHeight()
 {
-    return this->imageSize.height();
+    return this->frameSize.height();
 }
 
 size_t GameUnit::getCurrentFrame()
@@ -37,7 +38,14 @@ size_t GameUnit::getCurrentFrame()
 
 void GameUnit::nextFrame()
 {
-    ++this->currentFrame;
+    ++timeSinceCurrentFrame;
+
+    if (timeSinceCurrentFrame == timePerFrame)
+    {
+        ++this->currentFrame;
+
+        timeSinceCurrentFrame = 0;
+    }
 
     if (this->currentFrame == this->frames)
     {
