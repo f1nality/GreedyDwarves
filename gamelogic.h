@@ -15,7 +15,8 @@ class GameLogic : public QObject
 {
     Q_OBJECT
 public:
-    void buy();
+    void buyU();
+    void buyM();
     GameLogic();
     QList<GameUnit *> getGameUnits();
     int getGold();

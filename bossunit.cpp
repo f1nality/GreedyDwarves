@@ -30,5 +30,5 @@ void BossUnit::Initialize()
     this->image = new QImage(":/graphics/dragon.png");
     this->frameSize = QSize(200, 200);
     this->frames = 1;
-    this->healthPoints = 10;
+    this->healthPoints = 30;
 }

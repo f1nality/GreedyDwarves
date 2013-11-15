@@ -34,7 +34,8 @@ private:
 public slots:
     void onGameUpdated();
 private slots:
-    void onCooldownButtonPressed();
+    void buyUnit();
+    void buyMiner();
 };
 
 #endif // GAMECANVAS_H

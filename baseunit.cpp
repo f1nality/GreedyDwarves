@@ -41,7 +41,12 @@ void BaseUnit::buyMiner()
 {
     ++miners;
     gold = gold - minerCost;
-    minerCost = 2 * minerCost;
+    minerCost = 10 * minerCost;
+}
+
+int BaseUnit::getMinerCooldown()
+{
+    return minerCooldown;
 }
 
 void BaseUnit::Initialize()
@@ -53,5 +58,6 @@ void BaseUnit::Initialize()
     this->level = 1;
     this->gold = 30;
     this->miners = 1;
-    this->minerCost = 100;
+    this->minerCost = 1;
+    this->minerCooldown = 100;
 }

@@ -6,5 +6,6 @@
         <file alias="dragon.png">graphics/gragon.png</file>
         <file alias="order-button.png">graphics/order-button.png</file>
         <file alias="gold.png">graphics/gold.png</file>
+        <file alias="miner.png">graphics/miner.png</file>
     </qresource>
 </RCC>
