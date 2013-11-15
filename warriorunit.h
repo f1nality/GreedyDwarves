@@ -10,8 +10,8 @@ public:
     int getRange();
     int getDamage();
     int getState();
-    void fight();
-    void move();
+    void startFight();
+    void stopFight();
 protected:
     int healthPoints;
     int range;

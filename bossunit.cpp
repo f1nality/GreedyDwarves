@@ -14,6 +14,16 @@ BossUnit::BossUnit(float x, float y)
     this->y = y;
 }
 
+int BossUnit::getHP()
+{
+    return healthPoints;
+}
+
+void BossUnit::setHP(int hp)
+{
+    healthPoints = hp;
+}
+
 
 void BossUnit::Initialize()
 {

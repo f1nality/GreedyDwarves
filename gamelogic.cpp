@@ -26,41 +26,43 @@ QList<GameUnit *> GameLogic::getGameUnits()
 }
 
 void GameLogic::ProcessEvents()
-{
+{           
     foreach (GameUnit *unit, gameUnits)
-    {
-        unit->nextFrame();
-
-//        MovableUnit *movableUnit = dynamic_cast<MovableUnit *>(unit);
-
-        SwordsMan *warriorUnit = dynamic_cast<SwordsMan *>(unit);
-        if(warriorUnit)
-        warriorUnit->move();
-
-
-      /*  if (movableUnit)
         {
-          //  WarriorUnit *warriorUnit = dynamic_cast<WarriorUnit *>(unit);
-          //  warriorUnit->move();
+        MovableUnit *movableUnit = dynamic_cast<MovableUnit *>(unit);
+        unit->nextFrame();
+        if (movableUnit)
+        {
+            WarriorUnit *warriorUnit = dynamic_cast<WarriorUnit *>(unit);
             if (warriorUnit)
             {
-                if(boss->getX() - warriorUnit->getX() < 50){
-                    warriorUnit->fight();
-                   // delete warriorUni
-                   // this->gameUnits.append(new SwordsMan(100, 0));
+                if(boss->getX() - warriorUnit->getX() < 2 && boss->getHP() > 0){
+                    warriorUnit->startFight();
                 }
                 if(!warriorUnit->getState()) {
-              //  warriorUnit->move();
+                warriorUnit->move();
+                } else {
+                    boss->setHP(boss->getHP() - warriorUnit->getDamage());
+                    if(boss->getHP() <= 0) {
+                        this->gameUnits.removeOne(boss);
+                     //   delete boss;
+                        warriorUnit->stopFight();
+                    }
                 }
             } else {
-              //  movableUnit->move();
-           //}
+                movableUnit->move();
+           }
         }
-*/    }
-//    decCooldown();
-  //  mine();
-  //  buyUnit();
+        BossUnit *bossUnit = dynamic_cast<BossUnit *>(unit);
+        if (bossUnit) {
 
+        }
+    }
+
+/*    decCooldown();
+    mine();
+    buyUnit();
+*/
 
     emit GameUpdated();
 }
@@ -96,6 +98,7 @@ void GameLogic::buyMiner()
         }
     }
 }
+
 
 void GameLogic::unitOfTimeElapsed()
 {

@@ -21,13 +21,14 @@ int WarriorUnit::getState()
     return ifFight;
 }
 
-void WarriorUnit::fight()
+void WarriorUnit::startFight()
 {
     ifFight = true;
 }
 
-void WarriorUnit::move()
+void WarriorUnit::stopFight()
 {
     ifFight = false;
 }
+
 

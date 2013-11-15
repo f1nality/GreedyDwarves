@@ -8,6 +8,8 @@ class BossUnit : public StaticUnit
 public:
     BossUnit();
     BossUnit(float x, float y);
+    int getHP();
+    void setHP(int hp);
 private:
     void Initialize();
 protected:
