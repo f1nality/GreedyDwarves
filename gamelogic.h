@@ -16,7 +16,7 @@ public:
     QList<GameUnit *> getGameUnits();
     void ProcessEvents();
 private:
-    void coolDown();
+    void decCooldown();
     void buyUnit();
     void mine();
     void buyMiner();

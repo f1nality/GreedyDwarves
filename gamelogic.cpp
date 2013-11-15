@@ -34,7 +34,7 @@ void GameLogic::ProcessEvents()
             movableUnit->move();
         }
     }
-    coolDown();
+    decCooldown();
     mine();
     buyUnit();
 
@@ -42,9 +42,11 @@ void GameLogic::ProcessEvents()
     emit GameUpdated();
 }
 
-void GameLogic::cooldown()
+void GameLogic::decCooldown()
 {
-    --cooldown;
+    if(cooldown > 0) {
+        --cooldown;
+    }
 }
 
 void GameLogic::buyUnit()
