@@ -26,6 +26,8 @@ private:
     int frame;
     QImage *iconImage;
     QSize iconImageSize;
+    int cooldownElapsed;
+    int cooldownOverall;
 signals:
     void pressed();
 };

@@ -18,6 +18,7 @@ public:
     void buy();
     GameLogic();
     QList<GameUnit *> getGameUnits();
+    int getGold();
     void ProcessEvents();
 private:
     void decCooldown();

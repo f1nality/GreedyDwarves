@@ -8,6 +8,9 @@ UICooldownButton::UICooldownButton(QImage *iconImage, QSize iconImageSize)
     this->frame = 0;
     this->iconImage = iconImage;
     this->iconImageSize = iconImageSize;
+
+    this->cooldownElapsed = 4;
+    this->cooldownOverall = 6;
 }
 
 int UICooldownButton::getX()

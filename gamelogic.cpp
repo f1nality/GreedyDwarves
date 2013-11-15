@@ -30,6 +30,11 @@ QList<GameUnit *> GameLogic::getGameUnits()
     return this->gameUnits;
 }
 
+int GameLogic::getGold()
+{
+    return base->getGold();
+}
+
 void GameLogic::ProcessEvents()
 {           
     foreach (GameUnit *unit, gameUnits)

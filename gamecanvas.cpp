@@ -30,14 +30,23 @@ void GameCanvas::paintEvent(QPaintEvent *)
 
     foreach (GameUnit *unit, gameLogic->getGameUnits())
     {
-        painter.drawImage((int)unit->getX(), ROAD_Y - unit->getHeight() - (int)unit->getY(), *unit->getImage(), unit->getCurrentFrame() * unit->getWidth(), 0, unit->getWidth(), unit->getHeight(), 0);
+        painter.drawImage((int)unit->getX(), ROAD_Y - unit->getHeight() - (int)unit->getY(), *unit->getImage(), unit->getCurrentFrame() * unit->getWidth(), 0, unit->getWidth(), unit->getHeight());
     }
 
     foreach (UICooldownButton *button, cooldownButtons)
     {
-        painter.drawImage(button->getX(), button->getY(), *button->getBackgroundImage(), button->getFrame() * button->getBackgroundImageSize().width(), 0, button->getBackgroundImageSize().width(), button->getBackgroundImageSize().height(), 0);
-        painter.drawImage(button->getX() + button->getBackgroundImageSize().width() / 2 - button->getIconImageSize().width() / 2, button->getY() + button->getBackgroundImageSize().width() / 2 - button->getIconImageSize().height() / 2, *button->getIconImage(), 0, 0, button->getIconImageSize().width(), button->getIconImageSize().height(), 0);
+        painter.drawImage(button->getX(), button->getY(), *button->getBackgroundImage(), button->getFrame() * button->getBackgroundImageSize().width(), 0, button->getBackgroundImageSize().width(), button->getBackgroundImageSize().height());
+        painter.drawImage(button->getX() + button->getBackgroundImageSize().width() / 2 - button->getIconImageSize().width() / 2, button->getY() + button->getBackgroundImageSize().width() / 2 - button->getIconImageSize().height() / 2, *button->getIconImage(), 0, 0, button->getIconImageSize().width(), button->getIconImageSize().height());
+
+        QBrush brush = QBrush(QColor(102, 204, 102, 255));
+        //QBrush brush = QBrush(QColor(153, 204, 153, 255));
+        painter.fillRect(button->getX() + 4, button->getY() + button->getBackgroundImageSize().height() - 9, 34, 5, brush);
     }
+
+    painter.drawImage(640 - 110 - 10, 10, QImage(":/graphics/gold.png"), 0, 0, -1, -1);
+    painter.setPen(QPen(Qt::white));
+    painter.setFont(QFont("Courier New", 10));
+    painter.drawText(640 - 110 - 10 + 6, 10 + 7, 75, 14, Qt::AlignCenter, QString("%1").arg(gameLogic->getGold()), NULL);
 }
 
 void GameCanvas::addCooldownButton(UICooldownButton *button)
