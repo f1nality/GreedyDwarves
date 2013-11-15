@@ -8,8 +8,9 @@ class SwordsMan : public WarriorUnit
 public:
     SwordsMan();
     SwordsMan(float x, float y);
+    static const int cost = 40;
 private:
-     void Initialize();
+    void Initialize();
 };
 
 #endif // SWORDSMAN_H

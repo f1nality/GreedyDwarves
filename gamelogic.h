@@ -15,7 +15,6 @@ public:
     GameLogic();
     QList<GameUnit *> getGameUnits();
     void ProcessEvents();
-
 private:
     void coolDown();
     void buyUnit();

@@ -1,10 +1,7 @@
 #include "gamelogic.h"
 #include "baseunit.h"
-<<<<<<< HEAD
 #include "swordsman.h"
-=======
 
->>>>>>> b47b11a7d33aef5b8d516703a8885ea1d51246e2
 GameLogic::GameLogic()
 {
     QObject::connect(&gameTimer, SIGNAL(timeout()), this, SLOT(unitOfTimeElapsed()));
@@ -16,7 +13,7 @@ GameLogic::GameLogic()
 
     base = new BaseUnit(10, -10);
     this->gameUnits.append(base);
- //   this->gameUnits.append(new SwordsMan(100, 0));
+    //this->gameUnits.append(new SwordsMan(100, 0));
 }
 
 QList<GameUnit *> GameLogic::getGameUnits()
@@ -54,8 +51,8 @@ void GameLogic::buyUnit()
 {
 //only swordsmen for today
     if(cooldown){
-        if(base->getGold() >= SwordsMan.getCost()) {
-            base->setGold(base->getGold() - SwordsMan.getCost());
+        if(base->getGold() >= SwordsMan.cost) {
+            base->setGold(base->getGold() - SwordsMan.cost);
             this->gameUnits.append(new SwordsMan(100,0));
             cooldown = SwordsMan.getCooldown();
         }
