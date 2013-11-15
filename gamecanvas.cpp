@@ -8,8 +8,8 @@ GameCanvas::GameCanvas(QWidget *parent) :
     UICooldownButton *swordsManButton1 = new UICooldownButton(new QImage(":/graphics/swordsman.png"), QSize(32, 32));
     UICooldownButton *swordsManButton2 = new UICooldownButton(new QImage(":/graphics/swordsman.png"), QSize(32, 32));
 
-    QObject::connect(swordsManButton1, SIGNAL(pressed()), this, SLOT(onCooldownButtonPressed()));
-    QObject::connect(swordsManButton2, SIGNAL(pressed()), this, SLOT(onCooldownButtonPressed()));
+    QObject::connect(swordsManButton1, SIGNAL(pressed()), this, SLOT(buyUnit()));
+    QObject::connect(swordsManButton2, SIGNAL(pressed()), this, SLOT(buyMiner()));
 
     addCooldownButton(swordsManButton1);
     addCooldownButton(swordsManButton2);
@@ -95,7 +95,12 @@ void GameCanvas::onGameUpdated()
     repaint();
 }
 
-void GameCanvas::onCooldownButtonPressed()
+void GameCanvas::buyUnit()
 {
-    this->gameLogic->buy();
+    this->gameLogic->buyU();
+}
+
+void GameCanvas::buyMiner()
+{
+    this->gameLogic->buyM();
 }

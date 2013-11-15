@@ -3,10 +3,16 @@
 #include "swordsman.h"
 #include "bossunit.h"
 #include "warriorunit.h"
+#include "minerunit.h"
 
-void GameLogic::buy()
+void GameLogic::buyU()
 {
     buyUnit();
+}
+
+void GameLogic::buyM()
+{
+    buyMiner();
 }
 
 GameLogic::GameLogic()
@@ -97,9 +103,11 @@ void GameLogic::mine()
 }
 
 void GameLogic::buyMiner()
-    {   if(cooldown){
+    {if(!cooldown){
         if(base->getGold() >= base->getMinerCost()) {
             base->buyMiner();
+            this->gameUnits.append(new MinerUnit(20 + base->getMiners() * 60 , 20));
+            cooldown = base->getMinerCooldown();
         }
     }
 }

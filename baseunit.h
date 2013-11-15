@@ -13,6 +13,7 @@ public:
     int getMiners();
     int getMinerCost();
     void buyMiner();
+    int getMinerCooldown();
 
 private:
     void Initialize();
@@ -22,6 +23,7 @@ protected:
     int gold;
     int miners;
     int minerCost;
+    int minerCooldown;
 };
 
 #endif // BASEUNIT_H
