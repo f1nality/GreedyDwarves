@@ -1,5 +1,6 @@
 #include "gamelogic.h"
 #include "baseunit.h"
+
 GameLogic::GameLogic()
 {
     QObject::connect(&gameTimer, SIGNAL(timeout()), this, SLOT(unitOfTimeElapsed()));
@@ -22,7 +23,12 @@ void GameLogic::ProcessEvents()
     {
         unit->nextFrame();
 
-        ((MovableUnit *)unit)->move();
+        MovableUnit *movableUnit = dynamic_cast<MovableUnit *>(unit);
+
+        if (movableUnit)
+        {
+            movableUnit->move();
+        }
     }
 
     emit GameUpdated();

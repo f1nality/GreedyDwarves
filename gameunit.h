@@ -13,7 +13,7 @@ public:
     int getWidth();
     int getHeight();
     size_t getCurrentFrame();
-    void nextFrame();
+    virtual void nextFrame();
 protected:
     float x, y;
     QImage *image;
