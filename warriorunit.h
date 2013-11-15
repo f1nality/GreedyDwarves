@@ -7,10 +7,16 @@ class WarriorUnit : public MovableUnit
 {
 public:
     WarriorUnit();
-    int getCooldown();
+    int getRange();
+    int getDamage();
+    int getState();
+    void fight();
+    void move();
 protected:
     int healthPoints;
-    int cooldown;
+    int range;
+    int damage;
+    bool ifFight;
 };
 
 #endif // WARRIORUNIT_H

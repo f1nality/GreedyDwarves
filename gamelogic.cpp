@@ -1,6 +1,8 @@
 #include "gamelogic.h"
 #include "baseunit.h"
 #include "swordsman.h"
+#include "bossunit.h"
+#include "warriorunit.h"
 
 GameLogic::GameLogic()
 {
@@ -12,8 +14,10 @@ GameLogic::GameLogic()
     cooldown = 0;
 
     base = new BaseUnit(10, -10);
+    boss = new BossUnit(400,-20);
     this->gameUnits.append(base);
-    //this->gameUnits.append(new SwordsMan(100, 0));
+    this->gameUnits.append(boss);
+    this->gameUnits.append(new SwordsMan(100, 0));
 }
 
 QList<GameUnit *> GameLogic::getGameUnits()
@@ -27,16 +31,35 @@ void GameLogic::ProcessEvents()
     {
         unit->nextFrame();
 
-        MovableUnit *movableUnit = dynamic_cast<MovableUnit *>(unit);
+//        MovableUnit *movableUnit = dynamic_cast<MovableUnit *>(unit);
 
-        if (movableUnit)
+        SwordsMan *warriorUnit = dynamic_cast<SwordsMan *>(unit);
+        if(warriorUnit)
+        warriorUnit->move();
+
+
+      /*  if (movableUnit)
         {
-            movableUnit->move();
+          //  WarriorUnit *warriorUnit = dynamic_cast<WarriorUnit *>(unit);
+          //  warriorUnit->move();
+            if (warriorUnit)
+            {
+                if(boss->getX() - warriorUnit->getX() < 50){
+                    warriorUnit->fight();
+                   // delete warriorUni
+                   // this->gameUnits.append(new SwordsMan(100, 0));
+                }
+                if(!warriorUnit->getState()) {
+              //  warriorUnit->move();
+                }
+            } else {
+              //  movableUnit->move();
+           //}
         }
-    }
-    decCooldown();
-    mine();
-    buyUnit();
+*/    }
+//    decCooldown();
+  //  mine();
+  //  buyUnit();
 
 
     emit GameUpdated();
@@ -52,11 +75,11 @@ void GameLogic::decCooldown()
 void GameLogic::buyUnit()
 {
 //only swordsmen for today
-    if(cooldown){
-        if(base->getGold() >= SwordsMan.cost) {
-            base->setGold(base->getGold() - SwordsMan.cost);
+    if(!cooldown){
+        if(base->getGold() >= SwordsMan::cost) {
+            base->setGold(base->getGold() - SwordsMan::cost);
             this->gameUnits.append(new SwordsMan(100,0));
-            cooldown = SwordsMan.getCooldown();
+            cooldown = SwordsMan::cooldown;
         }
     }
 }
@@ -68,10 +91,8 @@ void GameLogic::mine()
 
 void GameLogic::buyMiner()
     {   if(cooldown){
-        if(base->getGold() >= base->minerCost) {
-            base->miners ++;
-            base->setGold(base->getGold() - base->minerCost);
-            base->minerCost = 2 * base->minerCost;
+        if(base->getGold() >= base->getMinerCost()) {
+            base->buyMiner();
         }
     }
 }

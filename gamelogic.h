@@ -7,6 +7,9 @@
 #include "movableunit.h"
 #include "swordsman.h"
 #include "baseunit.h"
+#include "bossunit.h"
+#include "warriorunit.h"
+
 
 class GameLogic : public QObject
 {
@@ -21,6 +24,7 @@ private:
     void mine();
     void buyMiner();
     BaseUnit *base;
+    BossUnit *boss;
     QTimer gameTimer;
     QList<GameUnit *> gameUnits;
     int cooldown;

@@ -3,7 +3,7 @@
 
 #include "staticunit.h"
 
-class BossUnit
+class BossUnit : public StaticUnit
 {
 public:
     BossUnit();

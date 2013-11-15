@@ -11,6 +11,8 @@ public:
     void setGold(int gold);
     int getGold();
     int getMiners();
+    int getMinerCost();
+    void buyMiner();
 
 private:
     void Initialize();

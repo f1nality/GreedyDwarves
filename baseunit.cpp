@@ -28,6 +28,18 @@ int BaseUnit::getMiners()
     return miners;
 }
 
+int BaseUnit::getMinerCost()
+{
+    return minerCost;
+}
+
+void BaseUnit::buyMiner()
+{
+    ++miners;
+    gold = gold - minerCost;
+    minerCost = 2 * minerCost;
+}
+
 void BaseUnit::Initialize()
 {
     this->image = new QImage(":/graphics/house.png");
