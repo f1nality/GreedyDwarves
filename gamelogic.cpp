@@ -1,6 +1,10 @@
 #include "gamelogic.h"
 #include "baseunit.h"
+<<<<<<< HEAD
 #include "swordsman.h"
+=======
+
+>>>>>>> b47b11a7d33aef5b8d516703a8885ea1d51246e2
 GameLogic::GameLogic()
 {
     QObject::connect(&gameTimer, SIGNAL(timeout()), this, SLOT(unitOfTimeElapsed()));
@@ -26,7 +30,12 @@ void GameLogic::ProcessEvents()
     {
         unit->nextFrame();
 
-        ((MovableUnit *)unit)->move();
+        MovableUnit *movableUnit = dynamic_cast<MovableUnit *>(unit);
+
+        if (movableUnit)
+        {
+            movableUnit->move();
+        }
     }
     coolDown();
     mine();
