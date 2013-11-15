@@ -8,11 +8,18 @@ class BaseUnit : public StaticUnit
 public:
     BaseUnit();
     BaseUnit(float x, float y);
+    void setGold(int gold);
+    int getGold();
+    int getMiners();
+
 private:
     void Initialize();
 protected:
     int healthPoints;
     int level;
+    int gold;
+    int miners;
+    int minerCost;
 };
 
 #endif // BASEUNIT_H

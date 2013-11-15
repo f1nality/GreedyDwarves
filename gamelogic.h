@@ -6,6 +6,7 @@
 #include "gameunit.h"
 #include "movableunit.h"
 #include "swordsman.h"
+#include "baseunit.h"
 
 class GameLogic : public QObject
 {
@@ -14,9 +15,16 @@ public:
     GameLogic();
     QList<GameUnit *> getGameUnits();
     void ProcessEvents();
+
 private:
+    void coolDown();
+    void buyUnit();
+    void mine();
+    void buyMiner();
+    BaseUnit *base;
     QTimer gameTimer;
     QList<GameUnit *> gameUnits;
+    int cooldown;
 public slots:
     void unitOfTimeElapsed();
 signals:

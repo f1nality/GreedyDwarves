@@ -13,6 +13,21 @@ BaseUnit::BaseUnit(float x, float y)
     this->y = y;
 }
 
+void BaseUnit::setGold(int gold)
+{
+    this->gold = gold;
+}
+
+int BaseUnit::getGold()
+{
+    return gold;
+}
+
+int BaseUnit::getMiners()
+{
+    return miners;
+}
+
 void BaseUnit::Initialize()
 {
     this->image = new QImage(":/graphics/house.png");
@@ -20,4 +35,7 @@ void BaseUnit::Initialize()
     this->frames = 1;
     this->healthPoints = 100;
     this->level = 1;
+    this->gold = 30;
+    this->miners = 1;
+    this->minerCost = 100;
 }

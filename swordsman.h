@@ -9,7 +9,7 @@ public:
     SwordsMan();
     SwordsMan(float x, float y);
 private:
-    void Initialize();
+     void Initialize();
 };
 
 #endif // SWORDSMAN_H
