@@ -4,6 +4,11 @@
 #include "bossunit.h"
 #include "warriorunit.h"
 
+void GameLogic::buy()
+{
+    buyUnit();
+}
+
 GameLogic::GameLogic()
 {
     QObject::connect(&gameTimer, SIGNAL(timeout()), this, SLOT(unitOfTimeElapsed()));
@@ -17,7 +22,7 @@ GameLogic::GameLogic()
     boss = new BossUnit(400,-20);
     this->gameUnits.append(base);
     this->gameUnits.append(boss);
-    this->gameUnits.append(new SwordsMan(100, 0));
+  //  this->gameUnits.append(new SwordsMan(100, 0));
 }
 
 QList<GameUnit *> GameLogic::getGameUnits()
@@ -59,10 +64,10 @@ void GameLogic::ProcessEvents()
         }
     }
 
-/*    decCooldown();
+    decCooldown();
     mine();
-    buyUnit();
-*/
+//    buyUnit();
+
 
     emit GameUpdated();
 }

@@ -97,5 +97,5 @@ void GameCanvas::onGameUpdated()
 
 void GameCanvas::onCooldownButtonPressed()
 {
-    qDebug() << "onCooldownButtonPressed";
+    this->gameLogic->buy();
 }
