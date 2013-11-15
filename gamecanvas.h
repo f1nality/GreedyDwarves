@@ -4,7 +4,13 @@
 #include <QWidget>
 #include <QPainter>
 #include <QImage>
+#include <QMouseEvent>
+#include <QList>
+#include <QSize>
+#include "uicooldownbutton.h"
 #include "gamelogic.h"
+#include "gamelogic.h"
+#include "swordsman.h"
 
 class GameCanvas : public QWidget
 {
@@ -16,10 +22,19 @@ protected:
     void paintEvent(QPaintEvent *);
 private:
     int ROAD_Y;
-private:
     GameLogic *gameLogic;
+    QList<UICooldownButton *> cooldownButtons;
+    int mousePressedX;
+    int mousePressedY;
+    void addCooldownButton(UICooldownButton *button);
+    void mousePressEvent(QMouseEvent *mouseEvent);
+    void mouseReleaseEvent(QMouseEvent *mouseEvent);
+    void mouseMoveEvent(QMouseEvent *mouseEvent);
+    bool isPointInArea(int x, int y, int rect_x, int rect_y, QSize rect_size);
 public slots:
     void onGameUpdated();
+private slots:
+    void onCooldownButtonPressed();
 };
 
 #endif // GAMECANVAS_H
