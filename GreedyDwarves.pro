@@ -22,7 +22,8 @@ SOURCES += main.cpp\
     swordsman.cpp \
     gamecanvas.cpp \
     gamelogic.cpp \
-    bossunit.cpp
+    bossunit.cpp \
+    uicooldownbutton.cpp
 
 HEADERS  += mainwindow.h \
     gameunit.h \
@@ -33,7 +34,8 @@ HEADERS  += mainwindow.h \
     swordsman.h \
     gamecanvas.h \
     gamelogic.h \
-    bossunit.h
+    bossunit.h \
+    uicooldownbutton.h
 
 FORMS    += mainwindow.ui
 
