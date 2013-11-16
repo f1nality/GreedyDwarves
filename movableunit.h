@@ -7,9 +7,13 @@ class MovableUnit : public GameUnit
 {
 public:
     MovableUnit();
-    void move();
+    void moveIfNeeded();
+    void setSpeed(float speed);
+    void setDirectionForward(bool value);
 protected:
     float speed;
+    bool moving;
+    bool isDirectionForward;
 };
 
 #endif // MOVABLEUNIT_H

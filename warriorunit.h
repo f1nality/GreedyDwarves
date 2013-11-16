@@ -10,13 +10,16 @@ public:
     int getRange();
     int getDamage();
     int getState();
-    void startFight();
-    void stopFight();
+    //void startFight();
+    //void stopFight();
+    void attack(WarriorUnit *enemyUnit);
+    int getHealthPoints();
+    void setHealthPoints(int healthPoints);
 protected:
     int healthPoints;
     int range;
     int damage;
-    bool ifFight;
+    bool isAttacking;
 };
 
 #endif // WARRIORUNIT_H

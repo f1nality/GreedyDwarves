@@ -44,7 +44,7 @@ void BaseUnit::buyMiner()
 {
     ++miners;
     gold = gold - minerCost;
-    minerCost = 10 * minerCost;
+    minerCost = 3 * minerCost;
 }
 
 int BaseUnit::getMinerCooldown()

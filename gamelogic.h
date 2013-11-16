@@ -25,9 +25,13 @@ private:
     BossUnit *boss;
     QTimer gameTimer;
     QList<GameUnit *> gameUnits;
+    QList<WarriorUnit *> playerAWarriorUnits;
+    QList<WarriorUnit *> playerBWarriorUnits;
     QList<UICooldownButton *> cooldownButtons;
     size_t timeElapsedSinceLastMine;
     static const size_t timePerMine = 10;
+    size_t timeElapsedSinceLastSpawn;
+    static const size_t timePerSpawn = 100;
     void mine();
     void addCooldownButton(UICooldownButton *button);
 public slots:

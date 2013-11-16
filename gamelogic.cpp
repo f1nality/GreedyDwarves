@@ -4,7 +4,7 @@
 #include "bossunit.h"
 #include "warriorunit.h"
 #include "minerunit.h"
-
+#include <QDebug>
 GameLogic::GameLogic()
 {
     QObject::connect(&gameTimer, SIGNAL(timeout()), this, SLOT(unitOfTimeElapsed()));
@@ -15,11 +15,11 @@ GameLogic::GameLogic()
     base = new BaseUnit(10, -10);
     boss = new BossUnit(400,-20);
 
-    this->gameUnits.append(base);
-    this->gameUnits.append(boss);
+    gameUnits.append(base);
+    gameUnits.append(boss);
 
-    UICooldownButton *swordsManButton = new UICooldownButton(new QImage(":/graphics/swordsman.png"), QSize(32, 32), 30);
-    UICooldownButton *minerButton = new UICooldownButton(new QImage(":/graphics/swordsman.png"), QSize(32, 32), 100);
+    UICooldownButton *swordsManButton = new UICooldownButton(new QImage(":/graphics/swordsman.png"), QSize(32, 32), SwordsMan::cooldown);
+    UICooldownButton *minerButton = new UICooldownButton(new QImage(":/graphics/swordsman.png"), QSize(32, 32), MinerUnit::cooldown);
 
     QObject::connect(swordsManButton, SIGNAL(pressed()), this, SLOT(buyUnit()));
     QObject::connect(minerButton, SIGNAL(pressed()), this, SLOT(buyMiner()));
@@ -44,52 +44,57 @@ int GameLogic::getGold()
 }
 
 void GameLogic::ProcessEvents()
-{           
-    foreach (GameUnit *unit, gameUnits)
+{
+    if (!playerAWarriorUnits.isEmpty() && !playerBWarriorUnits.isEmpty())
     {
-        MovableUnit *movableUnit = dynamic_cast<MovableUnit *>(unit);
+        WarriorUnit *frontPlayerAUnit = playerAWarriorUnits.front();
+        WarriorUnit *frontPlayerBUnit = playerBWarriorUnits.front();
+
+        if (frontPlayerBUnit->getX() - (frontPlayerAUnit->getX() + frontPlayerAUnit->getWidth()) < 2)
+        {
+            frontPlayerAUnit->attack(frontPlayerBUnit);
+            frontPlayerBUnit->attack(frontPlayerAUnit);
+
+            if (frontPlayerAUnit->getHealthPoints() < 0)
+            {
+                gameUnits.removeOne(frontPlayerAUnit);
+                playerAWarriorUnits.removeOne(frontPlayerAUnit);
+            }
+
+            if (frontPlayerBUnit->getHealthPoints() < 0)
+            {
+                gameUnits.removeOne(frontPlayerBUnit);
+                playerBWarriorUnits.removeOne(frontPlayerBUnit);
+            }
+        }
+    }
+
+    WarriorUnit *nextUnit = NULL;
+
+    foreach (WarriorUnit *unit, playerAWarriorUnits)
+    {
+        if (nextUnit == NULL || unit->getX() + unit->getWidth() < nextUnit->getX())
+        {
+            unit->moveIfNeeded();
+        }
 
         unit->nextFrame();
 
-        if (movableUnit)
+        nextUnit = unit;
+    }
+
+    nextUnit = NULL;
+
+    foreach (WarriorUnit *unit, playerBWarriorUnits)
+    {
+        if (nextUnit == NULL || unit->getX() - unit->getWidth() > nextUnit->getX())
         {
-            WarriorUnit *warriorUnit = dynamic_cast<WarriorUnit *>(unit);
-
-            if (warriorUnit)
-            {
-                if (boss->getX() - warriorUnit->getX() < 2 && boss->getHP() > 0)
-                {
-                    warriorUnit->startFight();
-                }
-
-                if (!warriorUnit->getState())
-                {
-                    warriorUnit->move();
-                }
-                else
-                {
-                    boss->setHP(boss->getHP() - warriorUnit->getDamage());
-
-                    if (boss->getHP() <= 0)
-                    {
-                        this->gameUnits.removeOne(boss);
-                        //delete boss;
-                        warriorUnit->stopFight();
-                    }
-                }
-            }
-            else
-            {
-                movableUnit->move();
-            }
+            unit->moveIfNeeded();
         }
 
-        BossUnit *bossUnit = dynamic_cast<BossUnit *>(unit);
+        unit->nextFrame();
 
-        if (bossUnit)
-        {
-
-        }
+        nextUnit = unit;
     }
 
     if (timeElapsedSinceLastMine < timePerMine)
@@ -99,6 +104,22 @@ void GameLogic::ProcessEvents()
     else
     {
         mine();
+    }
+
+    if (timeElapsedSinceLastSpawn < timePerSpawn)
+    {
+        ++timeElapsedSinceLastSpawn;
+    }
+    else
+    {
+        SwordsMan *enemy = new SwordsMan(400, 0);
+
+        enemy->setDirectionForward(false);
+
+        gameUnits.append(enemy);
+        playerBWarriorUnits.append(enemy);
+
+        timeElapsedSinceLastSpawn = 0;
     }
 
     foreach (UICooldownButton *button, cooldownButtons)
@@ -133,7 +154,11 @@ void GameLogic::buyUnit()
     }
 
     base->setGold(base->getGold() - SwordsMan::cost);
-    gameUnits.append(new SwordsMan(100, 0));
+
+    SwordsMan *swordsMan = new SwordsMan(100, 0);
+
+    gameUnits.append(swordsMan);
+    playerAWarriorUnits.append(swordsMan);
 
     UICooldownButton *button = (UICooldownButton *)sender();
 

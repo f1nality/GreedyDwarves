@@ -9,7 +9,7 @@ public:
     SwordsMan();
     SwordsMan(float x, float y);
     static const int cost = 40;
-    static const int cooldown = 100;
+    static const int cooldown = 50;
 private:
     void Initialize();
 };

@@ -8,6 +8,7 @@ class MinerUnit : public StaticUnit
 public:
     MinerUnit();
     MinerUnit(float x, float y);
+    static const int cooldown = 100;
 private:
     void Initialize();
 };

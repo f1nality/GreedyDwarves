@@ -20,7 +20,7 @@ void SwordsMan::Initialize()
     this->frames = 6;
     this->timePerFrame = 2;
     this->speed = 1;
+    this->healthPoints = 50;
     this->damage = 1;
-    this->ifFight = false;
 }
 
