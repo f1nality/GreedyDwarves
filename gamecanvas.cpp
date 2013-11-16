@@ -5,15 +5,6 @@ GameCanvas::GameCanvas(QWidget *parent) :
 {
     ROAD_Y = 195;
 
-    UICooldownButton *swordsManButton1 = new UICooldownButton(new QImage(":/graphics/swordsman.png"), QSize(32, 32));
-    UICooldownButton *swordsManButton2 = new UICooldownButton(new QImage(":/graphics/swordsman.png"), QSize(32, 32));
-
-    QObject::connect(swordsManButton1, SIGNAL(pressed()), this, SLOT(buyUnit()));
-    QObject::connect(swordsManButton2, SIGNAL(pressed()), this, SLOT(buyMiner()));
-
-    addCooldownButton(swordsManButton1);
-    addCooldownButton(swordsManButton2);
-
     setMouseTracking(true);
 }
 
@@ -33,14 +24,12 @@ void GameCanvas::paintEvent(QPaintEvent *)
         painter.drawImage((int)unit->getX(), ROAD_Y - unit->getHeight() - (int)unit->getY(), *unit->getImage(), unit->getCurrentFrame() * unit->getWidth(), 0, unit->getWidth(), unit->getHeight());
     }
 
-    foreach (UICooldownButton *button, cooldownButtons)
-    {
-        painter.drawImage(button->getX(), button->getY(), *button->getBackgroundImage(), button->getFrame() * button->getBackgroundImageSize().width(), 0, button->getBackgroundImageSize().width(), button->getBackgroundImageSize().height());
-        painter.drawImage(button->getX() + button->getBackgroundImageSize().width() / 2 - button->getIconImageSize().width() / 2, button->getY() + button->getBackgroundImageSize().width() / 2 - button->getIconImageSize().height() / 2, *button->getIconImage(), 0, 0, button->getIconImageSize().width(), button->getIconImageSize().height());
+    size_t i = 0;
 
-        QBrush brush = QBrush(QColor(102, 204, 102, 255));
-        //QBrush brush = QBrush(QColor(153, 204, 153, 255));
-        painter.fillRect(button->getX() + 4, button->getY() + button->getBackgroundImageSize().height() - 9, 34, 5, brush);
+    foreach (UICooldownButton *button, gameLogic->getCooldownButtons())
+    {
+        painter.drawImage(getCooldownButtonX(i), getCooldownButtonY(i), *button->getBackgroundImage(), button->getFrame() * button->getBackgroundImageSize().width(), 0, button->getBackgroundImageSize().width(), button->getBackgroundImageSize().height());
+        ++i;
     }
 
     painter.drawImage(640 - 110 - 10, 10, QImage(":/graphics/gold.png"), 0, 0, -1, -1);
@@ -49,12 +38,14 @@ void GameCanvas::paintEvent(QPaintEvent *)
     painter.drawText(640 - 110 - 10 + 6, 10 + 7, 75, 14, Qt::AlignCenter, QString("%1").arg(gameLogic->getGold()), NULL);
 }
 
-void GameCanvas::addCooldownButton(UICooldownButton *button)
+int GameCanvas::getCooldownButtonX(size_t index)
 {
-    button->setX(10 + (UICooldownButton::getBackgroundImageSize().width() + 4) * cooldownButtons.length());
-    button->setY(10);
+    return 10 + (UICooldownButton::getBackgroundImageSize().width() + 4) * index;
+}
 
-    cooldownButtons.append(button);
+int GameCanvas::getCooldownButtonY(size_t)
+{
+    return 10;
 }
 
 void GameCanvas::mousePressEvent(QMouseEvent *mouseEvent)
@@ -65,25 +56,37 @@ void GameCanvas::mousePressEvent(QMouseEvent *mouseEvent)
 
 void GameCanvas::mouseReleaseEvent(QMouseEvent *mouseEvent)
 {
-    foreach (UICooldownButton *button, cooldownButtons)
+    size_t i = 0;
+
+    foreach (UICooldownButton *button, gameLogic->getCooldownButtons())
     {
-        if (isPointInArea(mouseEvent->x(), mouseEvent->y(), button->getX(), button->getY(), button->getBackgroundImageSize()))
+        int buttonX = getCooldownButtonX(i);
+        int buttonY = getCooldownButtonY(i);
+
+        if (isPointInArea(mouseEvent->x(), mouseEvent->y(), buttonX, buttonY, button->getBackgroundImageSize()))
         {
-            if (isPointInArea(mousePressedX, mousePressedY, button->getX(), button->getY(), button->getBackgroundImageSize()))
+            if (isPointInArea(mousePressedX, mousePressedY, buttonX, buttonY, button->getBackgroundImageSize()) && button->isActive())
             {
                 emit button->pressed();
 
                 break;
             }
         }
+
+        ++i;
     }
 }
 
 void GameCanvas::mouseMoveEvent(QMouseEvent *mouseEvent)
 {
-    foreach (UICooldownButton *button, cooldownButtons)
+    size_t i = 0;
+
+    foreach (UICooldownButton *button, gameLogic->getCooldownButtons())
     {
-        if (isPointInArea(mouseEvent->x(), mouseEvent->y(), button->getX(), button->getY(), button->getBackgroundImageSize()))
+        int buttonX = getCooldownButtonX(i);
+        int buttonY = getCooldownButtonY(i);
+
+        if (isPointInArea(mouseEvent->x(), mouseEvent->y(), buttonX, buttonY, button->getBackgroundImageSize()))
         {
             button->setHover(true);
         }
@@ -91,6 +94,8 @@ void GameCanvas::mouseMoveEvent(QMouseEvent *mouseEvent)
         {
             button->setHover(false);
         }
+
+        ++i;
     }
 }
 
@@ -102,14 +107,4 @@ bool GameCanvas::isPointInArea(int x, int y, int rect_x, int rect_y, QSize rect_
 void GameCanvas::onGameUpdated()
 {
     repaint();
-}
-
-void GameCanvas::buyUnit()
-{
-    this->gameLogic->buyU();
-}
-
-void GameCanvas::buyMiner()
-{
-    this->gameLogic->buyM();
 }

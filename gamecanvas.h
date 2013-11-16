@@ -23,19 +23,17 @@ protected:
 private:
     int ROAD_Y;
     GameLogic *gameLogic;
-    QList<UICooldownButton *> cooldownButtons;
     int mousePressedX;
     int mousePressedY;
     void addCooldownButton(UICooldownButton *button);
+    int getCooldownButtonX(size_t index);
+    int getCooldownButtonY(size_t index);
     void mousePressEvent(QMouseEvent *mouseEvent);
     void mouseReleaseEvent(QMouseEvent *mouseEvent);
     void mouseMoveEvent(QMouseEvent *mouseEvent);
     bool isPointInArea(int x, int y, int rect_x, int rect_y, QSize rect_size);
 public slots:
     void onGameUpdated();
-private slots:
-    void buyUnit();
-    void buyMiner();
 };
 
 #endif // GAMECANVAS_H

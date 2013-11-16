@@ -9,30 +9,32 @@
 #include "baseunit.h"
 #include "bossunit.h"
 #include "warriorunit.h"
-
+#include "uicooldownbutton.h"
 
 class GameLogic : public QObject
 {
     Q_OBJECT
 public:
-    void buyU();
-    void buyM();
     GameLogic();
     QList<GameUnit *> getGameUnits();
+    QList<UICooldownButton *> getCooldownButtons();
     int getGold();
     void ProcessEvents();
 private:
-    void decCooldown();
-    void buyUnit();
-    void mine();
-    void buyMiner();
     BaseUnit *base;
     BossUnit *boss;
     QTimer gameTimer;
     QList<GameUnit *> gameUnits;
-    int cooldown;
+    QList<UICooldownButton *> cooldownButtons;
+    size_t timeElapsedSinceLastMine;
+    static const size_t timePerMine = 10;
+    void mine();
+    void addCooldownButton(UICooldownButton *button);
 public slots:
     void unitOfTimeElapsed();
+private slots:
+    void buyUnit();
+    void buyMiner();
 signals:
     void GameUpdated();
 };

@@ -15,10 +15,13 @@ BaseUnit::BaseUnit(float x, float y)
 
 void BaseUnit::setGold(int gold)
 {
-    if(gold > 100000){
-    this->gold = 100000;
-    } else {
-    this->gold = gold;
+    if (gold > 100000)
+    {
+        this->gold = 100000;
+    }
+    else
+    {
+        this->gold = gold;
     }
 }
 

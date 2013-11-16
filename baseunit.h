@@ -14,7 +14,6 @@ public:
     int getMinerCost();
     void buyMiner();
     int getMinerCooldown();
-
 private:
     void Initialize();
 protected:
