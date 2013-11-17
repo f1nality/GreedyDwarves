@@ -1,9 +1,5 @@
 #include "gamelogic.h"
-#include "baseunit.h"
-#include "swordsman.h"
-#include "bossunit.h"
-#include "warriorunit.h"
-#include "minerunit.h"
+
 #include <QDebug>
 GameLogic::GameLogic()
 {
@@ -14,6 +10,9 @@ GameLogic::GameLogic()
 
     base = new BaseUnit(10, -10);
     boss = new BossUnit(520, -10);
+    miner = new MinerUnit(110 , 28, base);
+
+    gameUnits.append(miner);
 
     gameUnits.append(base);
     playerAWarriorUnits.append(base);
@@ -61,6 +60,16 @@ void GameLogic::ProcessEvents()
             {
                 gameUnits.removeOne(frontPlayerAUnit);
                 playerAWarriorUnits.removeOne(frontPlayerAUnit);
+
+                BaseUnit *baseUnit = dynamic_cast<BaseUnit *>(frontPlayerAUnit);
+
+                if (baseUnit)
+                {
+                    gameUnits.removeOne(miner);
+
+                    base = NULL;
+                    miner = NULL;
+                }
             }
 
             if (frontPlayerBUnit->getHealthPoints() < 0)
@@ -186,7 +195,6 @@ void GameLogic::buyMiner()
     }
 
     base->buyMiner();
-    gameUnits.prepend(new MinerUnit(20 + base->getMiners() * 60 , 20));
 
     UICooldownButton *button = (UICooldownButton *)sender();
 

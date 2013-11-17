@@ -10,6 +10,7 @@
 #include "bossunit.h"
 #include "warriorunit.h"
 #include "uicooldownbutton.h"
+#include "minerunit.h"
 #include "bull.h"
 
 class GameLogic : public QObject
@@ -24,6 +25,7 @@ public:
 private:
     BaseUnit *base;
     BossUnit *boss;
+    MinerUnit *miner;
     QTimer gameTimer;
     QList<GameUnit *> gameUnits;
     QList<WarriorUnit *> playerAWarriorUnits;

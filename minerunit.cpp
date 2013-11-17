@@ -6,18 +6,24 @@ MinerUnit::MinerUnit()
 }
 
 
-MinerUnit::MinerUnit(float x, float y)
+MinerUnit::MinerUnit(float x, float y, BaseUnit *base)
 {
     this->x = x;
     this->y = y;
+    this->base = base;
 
     Initialize();
+}
+
+int MinerUnit::getMiners()
+{
+    return base->getMiners();
 }
 
 void MinerUnit::Initialize()
 {
     this->image = new QImage(":/graphics/miner.png");
-    this->frameSize = QSize(85, 80);
+    this->frameSize = QSize(40, 39);
     this->frames = 8;
-    this->timePerFrame = 3;
+    this->timePerFrame = 2;
 }

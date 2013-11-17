@@ -29,6 +29,17 @@ void GameCanvas::paintEvent(QPaintEvent *)
         {
             drawHealthBar(painter, warriorUnit);
         }
+
+        MinerUnit *minerUnit = dynamic_cast<MinerUnit *>(unit);
+
+        if (minerUnit)
+        {
+            painter.fillRect((int)unit->getX(), ROAD_Y - unit->getHeight() - (int)unit->getY() - 16, 16, 16, QBrush(Qt::black));
+            painter.setPen(QPen(Qt::white));
+            painter.setFont(QFont("Courier New", 8));
+            painter.drawText((int)unit->getX(), ROAD_Y - unit->getHeight() - (int)unit->getY() - 16, 16, 16, Qt::AlignCenter, QString("%1").arg(minerUnit->getMiners()), NULL);
+        }
+
     }
 
     size_t i = 0;
