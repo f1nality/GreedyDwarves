@@ -15,8 +15,10 @@ public:
     void attack(WarriorUnit *enemyUnit);
     int getHealthPoints();
     void setHealthPoints(int healthPoints);
+    int getMaxHealthPoints();
 protected:
     int healthPoints;
+    int maxHealthPoints;
     int range;
     int damage;
     bool isAttacking;

@@ -20,7 +20,8 @@ void Bull::Initialize()
     this->frames = 10;
     this->timePerFrame = 3;
     this->speed = 0.5;
-    this->healthPoints = 70;
+    this->maxHealthPoints = 70;
+    this->healthPoints = maxHealthPoints;
     this->damage = 1;
 }
 

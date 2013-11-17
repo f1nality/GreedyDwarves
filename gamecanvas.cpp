@@ -22,6 +22,13 @@ void GameCanvas::paintEvent(QPaintEvent *)
     foreach (GameUnit *unit, gameLogic->getGameUnits())
     {
         painter.drawImage((int)unit->getX(), ROAD_Y - unit->getHeight() - (int)unit->getY(), *unit->getImage(), unit->getCurrentFrame() * unit->getWidth(), 0, unit->getWidth(), unit->getHeight());
+
+        WarriorUnit *warriorUnit = dynamic_cast<WarriorUnit *>(unit);
+
+        if (warriorUnit)
+        {
+            drawHealthBar(painter, warriorUnit);
+        }
     }
 
     size_t i = 0;
@@ -102,6 +109,16 @@ void GameCanvas::mouseMoveEvent(QMouseEvent *mouseEvent)
 bool GameCanvas::isPointInArea(int x, int y, int rect_x, int rect_y, QSize rect_size)
 {
     return (x >= rect_x && y >= rect_y && x < rect_x + rect_size.width() && y < rect_y + rect_size.height());
+}
+
+void GameCanvas::drawHealthBar(QPainter &painter, WarriorUnit *unit)
+{
+    int bottom_margin = 10;
+    int border_width = 1;
+    int bar_height = 5;
+
+    painter.fillRect((int)unit->getX(), ROAD_Y - unit->getHeight() - (int)unit->getY() - bottom_margin, unit->getWidth(), bar_height, QBrush(Qt::black));
+    painter.fillRect((int)unit->getX() + border_width, ROAD_Y - unit->getHeight() - (int)unit->getY() - bottom_margin + border_width, (unit->getWidth() - border_width * 2) * ((float)unit->getHealthPoints() / unit->getMaxHealthPoints()), bar_height - border_width * 2, QBrush(QColor(102, 204, 102, 255)));
 }
 
 void GameCanvas::onGameUpdated()

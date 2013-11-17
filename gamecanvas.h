@@ -32,6 +32,7 @@ private:
     void mouseReleaseEvent(QMouseEvent *mouseEvent);
     void mouseMoveEvent(QMouseEvent *mouseEvent);
     bool isPointInArea(int x, int y, int rect_x, int rect_y, QSize rect_size);
+    void drawHealthBar(QPainter &painter, WarriorUnit *unit);
 public slots:
     void onGameUpdated();
 };

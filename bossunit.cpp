@@ -20,6 +20,7 @@ void BossUnit::Initialize()
     this->frameSize = QSize(120, 87);
     this->frames = 4;
     this->timePerFrame = 4;
-    this->healthPoints = 30;
+    this->maxHealthPoints = 30;
+    this->healthPoints = maxHealthPoints;
     this->moving = false;
 }

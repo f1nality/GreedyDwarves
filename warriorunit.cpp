@@ -57,4 +57,9 @@ void WarriorUnit::setHealthPoints(int healthPoints)
     this->healthPoints = healthPoints;
 }
 
+int WarriorUnit::getMaxHealthPoints()
+{
+    return maxHealthPoints;
+}
+
 
