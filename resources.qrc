@@ -3,9 +3,10 @@
         <file alias="background.png">graphics/background.png</file>
         <file alias="swordsman.png">graphics/swordsman.png</file>
         <file alias="house.png">graphics/house.png</file>
-        <file alias="dragon.png">graphics/gragon.png</file>
         <file alias="order-button.png">graphics/order-button.png</file>
         <file alias="gold.png">graphics/gold.png</file>
         <file alias="miner.png">graphics/miner.png</file>
+        <file alias="dragon.png">graphics/dragon.png</file>
+        <file alias="bull.png">graphics/bull.png</file>
     </qresource>
 </RCC>

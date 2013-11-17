@@ -24,7 +24,8 @@ SOURCES += main.cpp\
     gamelogic.cpp \
     bossunit.cpp \
     uicooldownbutton.cpp \
-    minerunit.cpp
+    minerunit.cpp \
+    bull.cpp
 
 HEADERS  += mainwindow.h \
     gameunit.h \
@@ -37,7 +38,8 @@ HEADERS  += mainwindow.h \
     gamelogic.h \
     bossunit.h \
     uicooldownbutton.h \
-    minerunit.h
+    minerunit.h \
+    bull.h
 
 FORMS    += mainwindow.ui
 

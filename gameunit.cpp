@@ -42,13 +42,13 @@ void GameUnit::nextFrame()
 
     if (timeSinceCurrentFrame == timePerFrame)
     {
-        ++this->currentFrame;
+        ++currentFrame;
 
         timeSinceCurrentFrame = 0;
     }
 
-    if (this->currentFrame == this->frames)
+    if (currentFrame == frames)
     {
-        this->currentFrame = 0;
+        currentFrame = 0;
     }
 }

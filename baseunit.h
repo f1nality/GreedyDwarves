@@ -1,9 +1,9 @@
 #ifndef BASEUNIT_H
 #define BASEUNIT_H
 
-#include "staticunit.h"
+#include "warriorunit.h"
 
-class BaseUnit : public StaticUnit
+class BaseUnit : public WarriorUnit
 {
 public:
     BaseUnit();
@@ -13,16 +13,13 @@ public:
     int getMiners();
     int getMinerCost();
     void buyMiner();
-    int getMinerCooldown();
 private:
     void Initialize();
 protected:
-    int healthPoints;
     int level;
     int gold;
     int miners;
     int minerCost;
-    int minerCooldown;
 };
 
 #endif // BASEUNIT_H

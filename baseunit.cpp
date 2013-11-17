@@ -47,11 +47,6 @@ void BaseUnit::buyMiner()
     minerCost = 3 * minerCost;
 }
 
-int BaseUnit::getMinerCooldown()
-{
-    return minerCooldown;
-}
-
 void BaseUnit::Initialize()
 {
     this->image = new QImage(":/graphics/house.png");
@@ -62,5 +57,6 @@ void BaseUnit::Initialize()
     this->gold = 30;
     this->miners = 1;
     this->minerCost = 1;
-    this->minerCooldown = 100;
+    this->damage = 0;
+
 }

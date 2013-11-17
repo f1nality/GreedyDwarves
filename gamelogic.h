@@ -10,6 +10,7 @@
 #include "bossunit.h"
 #include "warriorunit.h"
 #include "uicooldownbutton.h"
+#include "bull.h"
 
 class GameLogic : public QObject
 {
@@ -31,7 +32,7 @@ private:
     size_t timeElapsedSinceLastMine;
     static const size_t timePerMine = 10;
     size_t timeElapsedSinceLastSpawn;
-    static const size_t timePerSpawn = 100;
+    static const size_t timePerSpawn = 200;
     void mine();
     void addCooldownButton(UICooldownButton *button);
 public slots:

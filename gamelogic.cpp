@@ -13,10 +13,12 @@ GameLogic::GameLogic()
     gameTimer.start();
 
     base = new BaseUnit(10, -10);
-    boss = new BossUnit(400,-20);
+    boss = new BossUnit(520, -10);
 
     gameUnits.append(base);
+    playerAWarriorUnits.append(base);
     gameUnits.append(boss);
+    playerBWarriorUnits.append(boss);
 
     UICooldownButton *swordsManButton = new UICooldownButton(new QImage(":/graphics/swordsman.png"), QSize(32, 32), SwordsMan::cooldown);
     UICooldownButton *minerButton = new UICooldownButton(new QImage(":/graphics/swordsman.png"), QSize(32, 32), MinerUnit::cooldown);
@@ -65,6 +67,13 @@ void GameLogic::ProcessEvents()
             {
                 gameUnits.removeOne(frontPlayerBUnit);
                 playerBWarriorUnits.removeOne(frontPlayerBUnit);
+
+                BossUnit *bossUnit = dynamic_cast<BossUnit *>(frontPlayerBUnit);
+
+                if (bossUnit)
+                {
+                    boss = NULL;
+                }
             }
         }
     }
@@ -78,8 +87,6 @@ void GameLogic::ProcessEvents()
             unit->moveIfNeeded();
         }
 
-        unit->nextFrame();
-
         nextUnit = unit;
     }
 
@@ -91,8 +98,6 @@ void GameLogic::ProcessEvents()
         {
             unit->moveIfNeeded();
         }
-
-        unit->nextFrame();
 
         nextUnit = unit;
     }
@@ -106,20 +111,28 @@ void GameLogic::ProcessEvents()
         mine();
     }
 
-    if (timeElapsedSinceLastSpawn < timePerSpawn)
+    if (boss)
     {
-        ++timeElapsedSinceLastSpawn;
+        if (timeElapsedSinceLastSpawn < timePerSpawn)
+        {
+            ++timeElapsedSinceLastSpawn;
+        }
+        else
+        {
+            Bull *enemy = new Bull(boss->getX() - 58, 0);
+
+            enemy->setDirectionForward(false);
+
+            gameUnits.append(enemy);
+            playerBWarriorUnits.insert(playerBWarriorUnits.length() - 1, enemy);
+
+            timeElapsedSinceLastSpawn = 0;
+        }
     }
-    else
+
+    foreach (GameUnit *unit, gameUnits)
     {
-        SwordsMan *enemy = new SwordsMan(400, 0);
-
-        enemy->setDirectionForward(false);
-
-        gameUnits.append(enemy);
-        playerBWarriorUnits.append(enemy);
-
-        timeElapsedSinceLastSpawn = 0;
+        unit->nextFrame();
     }
 
     foreach (UICooldownButton *button, cooldownButtons)
@@ -158,7 +171,7 @@ void GameLogic::buyUnit()
     SwordsMan *swordsMan = new SwordsMan(100, 0);
 
     gameUnits.append(swordsMan);
-    playerAWarriorUnits.append(swordsMan);
+    playerAWarriorUnits.insert(playerAWarriorUnits.length() - 1, swordsMan);
 
     UICooldownButton *button = (UICooldownButton *)sender();
 
@@ -173,7 +186,7 @@ void GameLogic::buyMiner()
     }
 
     base->buyMiner();
-    gameUnits.append(new MinerUnit(20 + base->getMiners() * 60 , 20));
+    gameUnits.prepend(new MinerUnit(20 + base->getMiners() * 60 , 20));
 
     UICooldownButton *button = (UICooldownButton *)sender();
 
