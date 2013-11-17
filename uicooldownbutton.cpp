@@ -1,6 +1,6 @@
 #include "uicooldownbutton.h"
 
-UICooldownButton::UICooldownButton(QImage *iconImage, QSize iconImageSize, int cooldownOverall)
+UICooldownButton::UICooldownButton(QImage iconImage, QSize iconImageSize, int cooldownOverall)
 {
     this->backgroundImage = new QImage(getBackgroundImageSize().width() * 2, getBackgroundImageSize().height(), QImage::Format_ARGB32);
     this->frame = 0;
@@ -8,6 +8,9 @@ UICooldownButton::UICooldownButton(QImage *iconImage, QSize iconImageSize, int c
     this->iconImageSize = iconImageSize;
     this->cooldownElapsed = cooldownOverall;
     this->cooldownOverall = cooldownOverall;
+
+    this->iconImageGrayscale = this->iconImage.copy();
+    convertToGrayScale(this->iconImageGrayscale);
 
     repaint();
 }
@@ -20,16 +23,6 @@ QImage *UICooldownButton::getBackgroundImage()
 QSize UICooldownButton::getBackgroundImageSize()
 {
     return QSize(42, 50);
-}
-
-QImage *UICooldownButton::getIconImage()
-{
-    return iconImage;
-}
-
-QSize UICooldownButton::getIconImageSize()
-{
-    return iconImageSize;
 }
 
 int UICooldownButton::getFrame()
@@ -68,16 +61,25 @@ void UICooldownButton::resetCooldownElapsed()
     cooldownElapsed = 0;
     repaint();
 }
-
+#include <QDebug>
 void UICooldownButton::repaint()
 {
     QPainter painter(backgroundImage);
 
-    painter.drawImage(0, 0, QImage(":/graphics/order-button.png"), 0, 0, -1, -1);
-    painter.drawImage(getBackgroundImageSize().width() / 2 - iconImageSize.width() / 2, getBackgroundImageSize().width() / 2 - iconImageSize.height() / 2, *iconImage, 0, 0, iconImageSize.width(), iconImageSize.height());
-    painter.drawImage(getBackgroundImageSize().width() + getBackgroundImageSize().width() / 2 - iconImageSize.width() / 2, getBackgroundImageSize().width() / 2 - iconImageSize.height() / 2, *iconImage, 0, 0, iconImageSize.width(), iconImageSize.height());
-
     float cooldownPercentage = (float)cooldownElapsed / cooldownOverall;
+
+    painter.drawImage(0, 0, QImage(":/graphics/order-button.png"), 0, 0, -1, -1);
+
+    if (cooldownPercentage < 1)
+    {
+        painter.drawImage(getBackgroundImageSize().width() / 2 - iconImageSize.width() / 2, getBackgroundImageSize().width() / 2 - iconImageSize.height() / 2, iconImageGrayscale, 0, 0, iconImageSize.width(), iconImageSize.height());
+        painter.drawImage(getBackgroundImageSize().width() + getBackgroundImageSize().width() / 2 - iconImageSize.width() / 2, getBackgroundImageSize().width() / 2 - iconImageSize.height() / 2, iconImageGrayscale, 0, 0, iconImageSize.width(), iconImageSize.height());
+    }
+    else
+    {
+        painter.drawImage(getBackgroundImageSize().width() / 2 - iconImageSize.width() / 2, getBackgroundImageSize().width() / 2 - iconImageSize.height() / 2, iconImage, 0, 0, iconImageSize.width(), iconImageSize.height());
+        painter.drawImage(getBackgroundImageSize().width() + getBackgroundImageSize().width() / 2 - iconImageSize.width() / 2, getBackgroundImageSize().width() / 2 - iconImageSize.height() / 2, iconImage, 0, 0, iconImageSize.width(), iconImageSize.height());
+    }
 
     QBrush brush = QBrush(QColor(102, 204, 102, 255));
 
@@ -88,4 +90,21 @@ void UICooldownButton::repaint()
 
     painter.fillRect(4, getBackgroundImageSize().height() - 9, 34 * cooldownPercentage, 5, brush);
     painter.fillRect(getBackgroundImageSize().width() + 4, getBackgroundImageSize().height() - 9, 34 * cooldownPercentage, 5, brush);
+}
+
+void UICooldownButton::convertToGrayScale(QImage &image)
+{
+    QRgb col;
+    int gray;
+
+    for (int i = 0; i < image.width(); ++i)
+    {
+        for (int j = 0; j < image.height(); ++j)
+        {
+            col = image.pixel(i, j);
+            gray = qGray(col);
+
+            image.setPixel(i, j, qRgba(gray, gray, gray, qAlpha(col)));
+        }
+    }
 }

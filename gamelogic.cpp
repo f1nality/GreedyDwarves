@@ -1,5 +1,4 @@
 #include "gamelogic.h"
-
 #include <QDebug>
 GameLogic::GameLogic()
 {
@@ -19,8 +18,8 @@ GameLogic::GameLogic()
     gameUnits.append(boss);
     playerBWarriorUnits.append(boss);
 
-    UICooldownButton *swordsManButton = new UICooldownButton(new QImage(":/graphics/swordsman.png"), QSize(32, 32), SwordsMan::cooldown);
-    UICooldownButton *minerButton = new UICooldownButton(new QImage(":/graphics/swordsman.png"), QSize(32, 32), MinerUnit::cooldown);
+    UICooldownButton *swordsManButton = new UICooldownButton(QImage(":/graphics/swordsman.png"), QSize(32, 32), SwordsMan::cooldown);
+    UICooldownButton *minerButton = new UICooldownButton(QImage(":/graphics/miner.png"), QSize(40, 39), MinerUnit::cooldown);
 
     QObject::connect(swordsManButton, SIGNAL(pressed()), this, SLOT(buyUnit()));
     QObject::connect(minerButton, SIGNAL(pressed()), this, SLOT(buyMiner()));
