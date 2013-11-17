@@ -61,7 +61,7 @@ void UICooldownButton::resetCooldownElapsed()
     cooldownElapsed = 0;
     repaint();
 }
-#include <QDebug>
+
 void UICooldownButton::repaint()
 {
     QPainter painter(backgroundImage);

@@ -119,7 +119,7 @@ void GameLogic::ProcessEvents()
         mine();
     }
 
-    if (boss)
+    if (boss && 1==0)
     {
         if (timeElapsedSinceLastSpawn < timePerSpawn)
         {

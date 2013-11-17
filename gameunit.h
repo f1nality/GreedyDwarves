@@ -2,6 +2,7 @@
 #define GAMEUNIT_H
 
 #include <QImage>
+#include <QMap>
 
 class GameUnit
 {
@@ -18,8 +19,9 @@ protected:
     float x, y;
     QImage *image;
     QSize frameSize;
-    size_t frames;
-    size_t timePerFrame;
+    //size_t frames;
+    QMap<size_t, size_t> frames;
+    //size_t timePerFrame;
     size_t timeSinceCurrentFrame;
     size_t currentFrame;
 };

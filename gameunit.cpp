@@ -40,15 +40,17 @@ void GameUnit::nextFrame()
 {
     ++timeSinceCurrentFrame;
 
-    if (timeSinceCurrentFrame == timePerFrame)
+    if (frames.contains(currentFrame) && timeSinceCurrentFrame == frames[currentFrame])
     {
-        ++currentFrame;
-
-        timeSinceCurrentFrame = 0;
-    }
-
-    if (currentFrame == frames)
-    {
-        currentFrame = 0;
+        if (frames.contains(currentFrame + 1))
+        {
+            ++currentFrame;
+            timeSinceCurrentFrame = 0;
+        }
+        else
+        {
+            currentFrame = frames.keys().first();
+            timeSinceCurrentFrame = 0;
+        }
     }
 }
