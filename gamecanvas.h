@@ -32,7 +32,11 @@ private:
     void mouseReleaseEvent(QMouseEvent *mouseEvent);
     void mouseMoveEvent(QMouseEvent *mouseEvent);
     bool isPointInArea(int x, int y, int rect_x, int rect_y, QSize rect_size);
+    void drawGameUnits(QPainter &painter);
     void drawHealthBar(QPainter &painter, WarriorUnit *unit);
+    void drawMinersCount(QPainter &painter, MinerUnit *unit);
+    void drawCooldownButtons(QPainter &painter);
+    void drawGold(QPainter &painter);
 public slots:
     void onGameUpdated();
 };

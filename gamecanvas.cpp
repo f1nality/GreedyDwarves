@@ -19,40 +19,9 @@ void GameCanvas::paintEvent(QPaintEvent *)
 
     painter.drawImage(0, 0, QImage(":/graphics/background.png"), 0, 0, -1, -1, 0);
 
-    foreach (GameUnit *unit, gameLogic->getGameUnits())
-    {
-        painter.drawImage((int)unit->getX(), ROAD_Y - unit->getHeight() - (int)unit->getY(), *unit->getImage(), unit->getCurrentFrame() * unit->getWidth(), 0, unit->getWidth(), unit->getHeight());
-
-        WarriorUnit *warriorUnit = dynamic_cast<WarriorUnit *>(unit);
-
-        if (warriorUnit)
-        {
-            drawHealthBar(painter, warriorUnit);
-        }
-
-        MinerUnit *minerUnit = dynamic_cast<MinerUnit *>(unit);
-
-        if (minerUnit)
-        {
-            painter.fillRect((int)unit->getX(), ROAD_Y - unit->getHeight() - (int)unit->getY() - 16, 16, 16, QBrush(Qt::black));
-            painter.setPen(QPen(Qt::white));
-            painter.setFont(QFont("Courier New", 8));
-            painter.drawText((int)unit->getX(), ROAD_Y - unit->getHeight() - (int)unit->getY() - 16, 16, 16, Qt::AlignCenter, QString("%1").arg(minerUnit->getMiners()), NULL);
-        }
-    }
-
-    size_t i = 0;
-
-    foreach (UICooldownButton *button, gameLogic->getCooldownButtons())
-    {
-        painter.drawImage(getCooldownButtonX(i), getCooldownButtonY(i), *button->getBackgroundImage(), button->getFrame() * button->getBackgroundImageSize().width(), 0, button->getBackgroundImageSize().width(), button->getBackgroundImageSize().height());
-        ++i;
-    }
-
-    painter.drawImage(640 - 110 - 10, 10, QImage(":/graphics/gold.png"), 0, 0, -1, -1);
-    painter.setPen(QPen(Qt::white));
-    painter.setFont(QFont("Courier New", 10));
-    painter.drawText(640 - 110 - 10 + 6, 10 + 7, 75, 14, Qt::AlignCenter, QString("%1").arg(gameLogic->getGold()), NULL);
+    drawGameUnits(painter);
+    drawCooldownButtons(painter);
+    drawGold(painter);
 }
 
 int GameCanvas::getCooldownButtonX(size_t index)
@@ -121,6 +90,28 @@ bool GameCanvas::isPointInArea(int x, int y, int rect_x, int rect_y, QSize rect_
     return (x >= rect_x && y >= rect_y && x < rect_x + rect_size.width() && y < rect_y + rect_size.height());
 }
 
+void GameCanvas::drawGameUnits()
+{
+    foreach (GameUnit *unit, gameLogic->getGameUnits())
+    {
+        painter.drawImage((int)unit->getX(), ROAD_Y - unit->getHeight() - (int)unit->getY(), *unit->getImage(), unit->getCurrentFrame() * unit->getWidth(), 0, unit->getWidth(), unit->getHeight());
+
+        WarriorUnit *warriorUnit = dynamic_cast<WarriorUnit *>(unit);
+
+        if (warriorUnit)
+        {
+            drawHealthBar(painter, warriorUnit);
+        }
+
+        MinerUnit *minerUnit = dynamic_cast<MinerUnit *>(unit);
+
+        if (minerUnit)
+        {
+            drawMinersCount(painter, minerUnit);
+        }
+    }
+}
+
 void GameCanvas::drawHealthBar(QPainter &painter, WarriorUnit *unit)
 {
     int padding_left = 1;
@@ -133,7 +124,34 @@ void GameCanvas::drawHealthBar(QPainter &painter, WarriorUnit *unit)
     painter.fillRect((int)unit->getX() + padding_left + border_width, ROAD_Y - unit->getHeight() - (int)unit->getY() - bottom_margin + border_width, (unit->getWidth() - border_width * 2 - padding_left - padding_right) * ((float)unit->getHealthPoints() / unit->getMaxHealthPoints()), bar_height - border_width * 2, QBrush(QColor(102, 204, 102, 255)));
 }
 
-void GameCanvas::onGameUpdated()
+void GameCanvas::drawMinersCount(QPainter &painter, MinerUnit *unit)
+{
+    painter.fillRect((int)unit->getX(), ROAD_Y - unit->getHeight() - (int)unit->getY() - 16, 16, 16, QBrush(Qt::black));
+    painter.setPen(QPen(Qt::white));
+    painter.setFont(QFont("Courier New", 8));
+    painter.drawText((int)unit->getX(), ROAD_Y - unit->getHeight() - (int)unit->getY() - 16, 16, 16, Qt::AlignCenter, QString("%1").arg(minerUnit->getMiners()), NULL);
+}
+
+void GameCanvas::drawCooldownButtons(QPainter &painter)
+{
+    size_t i = 0;
+
+    foreach (UICooldownButton *button, gameLogic->getCooldownButtons())
+    {
+        painter.drawImage(getCooldownButtonX(i), getCooldownButtonY(i), *button->getBackgroundImage(), button->getFrame() * button->getBackgroundImageSize().width(), 0, button->getBackgroundImageSize().width(), button->getBackgroundImageSize().height());
+        ++i;
+    }
+}
+
+void GameCanvas::drawGold(QPainter &painter)
+{
+    painter.drawImage(640 - 110 - 10, 10, QImage(":/graphics/gold.png"), 0, 0, -1, -1);
+    painter.setPen(QPen(Qt::white));
+    painter.setFont(QFont("Courier New", 10));
+    painter.drawText(640 - 110 - 10 + 6, 10 + 7, 75, 14, Qt::AlignCenter, QString("%1").arg(gameLogic->getGold()), NULL);
+}
+
+void GameCanvas::onGameUpdated(QPainter &painter)
 {
     repaint();
 }
