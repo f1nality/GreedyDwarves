@@ -40,7 +40,7 @@ private:
     void addCooldownButton(UICooldownButton *button);
     void fight();
     void move();
-    void bossTurn();
+    void enemyTurn();
 public slots:
     void unitOfTimeElapsed();
 private slots:

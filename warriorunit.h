@@ -17,6 +17,7 @@ public:
     void setHealthPoints(int healthPoints);
     int getMaxHealthPoints();
     virtual void nextFrame();
+    void setAttacking(bool isAttacking);
 protected:
     int healthPoints;
     int maxHealthPoints;
@@ -25,7 +26,7 @@ protected:
     bool isAttacking;
     QMap<size_t, size_t> attackingFrames;
 private:
-    void setAttacking(bool isAttacking);
+
 };
 
 #endif // WARRIORUNIT_H

@@ -18,7 +18,7 @@ void Bull::Initialize()
     this->image = new QImage(":/graphics/bull.png");
     this->frameSize = QSize(58, 64);
     this->speed = 0.5;
-    this->maxHealthPoints = 70;
+    this->maxHealthPoints = 300;
     this->healthPoints = maxHealthPoints;
     this->damage = 1;
 

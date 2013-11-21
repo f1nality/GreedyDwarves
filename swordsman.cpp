@@ -18,7 +18,7 @@ void SwordsMan::Initialize()
     this->image = new QImage(":/graphics/swordsman.png");
     this->frameSize = QSize(32, 32);
     this->speed = 1;
-    this->maxHealthPoints = 50;
+    this->maxHealthPoints = 200;
     this->healthPoints = maxHealthPoints;
     this->damage = 1;
 

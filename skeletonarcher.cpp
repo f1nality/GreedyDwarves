@@ -19,8 +19,8 @@ void SkeletonArcher::Initialize()
     this->speed = 1;
     this->maxHealthPoints = 20;
     this->healthPoints = maxHealthPoints;
-    this->damage = 2;
-    this->range = 50;
+    this->damage = 1;
+    this->range = 100;
 
     this->frames.insert(0, 3);
     this->frames.insert(1, 3);

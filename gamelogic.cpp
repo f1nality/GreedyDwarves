@@ -50,7 +50,7 @@ void GameLogic::ProcessEvents()
     move();
     mine();
 
-    bossTurn();
+    enemyTurn();
 
     foreach (GameUnit *unit, gameUnits)
     {
@@ -89,43 +89,50 @@ void GameLogic::fight()
     {
         WarriorUnit *frontPlayerAUnit = playerAWarriorUnits.front();
         WarriorUnit *frontPlayerBUnit = playerBWarriorUnits.front();
-
-        if (frontPlayerBUnit->getX() - (frontPlayerAUnit->getX() + frontPlayerAUnit->getWidth()) < frontPlayerAUnit->getRange())
-        {
-            frontPlayerAUnit->attack(frontPlayerBUnit);
-
-            if (frontPlayerBUnit->getHealthPoints() < 0)
+        foreach(WarriorUnit *PlayerAUnit, playerAWarriorUnits) {
+            if (frontPlayerBUnit->getX() - (PlayerAUnit->getX() + PlayerAUnit->getWidth()) < PlayerAUnit->getRange())
             {
-                gameUnits.removeOne(frontPlayerBUnit);
-                playerBWarriorUnits.removeOne(frontPlayerBUnit);
+                PlayerAUnit->attack(frontPlayerBUnit);
 
-                BossUnit *bossUnit = dynamic_cast<BossUnit *>(frontPlayerBUnit);
-
-                if (bossUnit)
+                if (frontPlayerBUnit->getHealthPoints() < 0)
                 {
-                    boss = NULL;
+                    gameUnits.removeOne(frontPlayerBUnit);
+                    playerBWarriorUnits.removeOne(frontPlayerBUnit);
+
+                    BossUnit *bossUnit = dynamic_cast<BossUnit *>(frontPlayerBUnit);
+
+                    if (bossUnit)
+                    {
+                        boss = NULL;
+                    }
                 }
             }
+            else {
+                PlayerAUnit->setAttacking(false);
+            }
         }
-
-        if (frontPlayerBUnit->getX() - (frontPlayerAUnit->getX() + frontPlayerAUnit->getWidth()) < frontPlayerBUnit->getRange())
-        {
-            frontPlayerBUnit->attack(frontPlayerAUnit);
-
-            if (frontPlayerAUnit->getHealthPoints() < 0)
+        foreach(WarriorUnit *PlayerBUnit, playerBWarriorUnits){
+            if (PlayerBUnit->getX() - (frontPlayerAUnit->getX() + frontPlayerAUnit->getWidth()) < PlayerBUnit->getRange())
             {
-                gameUnits.removeOne(frontPlayerAUnit);
-                playerAWarriorUnits.removeOne(frontPlayerAUnit);
+                PlayerBUnit->attack(frontPlayerAUnit);
 
-                BaseUnit *baseUnit = dynamic_cast<BaseUnit *>(frontPlayerAUnit);
-
-                if (baseUnit)
+                if (frontPlayerAUnit->getHealthPoints() < 0)
                 {
-                    gameUnits.removeOne(miner);
+                    gameUnits.removeOne(frontPlayerAUnit);
+                    playerAWarriorUnits.removeOne(frontPlayerAUnit);
 
-                    base = NULL;
-                    miner = NULL;
+                    BaseUnit *baseUnit = dynamic_cast<BaseUnit *>(frontPlayerAUnit);
+
+                    if (baseUnit)
+                    {
+                        gameUnits.removeOne(miner);
+
+                        base = NULL;
+                        miner = NULL;
+                    }
                 }
+            } else {
+                PlayerBUnit->setAttacking(false);
             }
         }
     }
@@ -150,7 +157,7 @@ void GameLogic::move()
 
     foreach (WarriorUnit *unit, playerBWarriorUnits)
     {
-        if (nextUnit == NULL || unit->getX() - unit->getWidth() > nextUnit->getX())
+        if (nextUnit == NULL || unit->getX()  > nextUnit->getX() + nextUnit->getWidth())
         {
             unit->moveIfNeeded();
         }
@@ -160,7 +167,7 @@ void GameLogic::move()
 
 }
 
-void GameLogic::bossTurn()
+void GameLogic::enemyTurn()
 {
     if (boss)
     {
@@ -170,16 +177,19 @@ void GameLogic::bossTurn()
         }
         else
         {
-           // Bull *enemy = new Bull(boss->getX() - 58, 0);
-            SkeletonArcher *enemy = new SkeletonArcher(boss->getX() - 58, 0);
-
+            WarriorUnit *enemy;
+            if(timeElapsedSinceLastSpawn%100 !=0) {
+               enemy = new Bull(boss->getX() - 58, 0);
+            } else {
+                enemy = new SkeletonArcher(boss->getX() - 58, 0);
+            }
             enemy->setDirectionForward(false);
-
-            gameUnits.append(enemy);
+            gameUnits.append(enemy);            
             playerBWarriorUnits.insert(playerBWarriorUnits.length() - 1, enemy);
 
             timeElapsedSinceLastSpawn = 0;
         }
+
     }
 }
 

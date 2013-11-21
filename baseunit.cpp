@@ -52,7 +52,7 @@ void BaseUnit::Initialize()
     this->image = new QImage(":/graphics/house.png");
     this->frameSize = QSize(94, 83);
     //this->frames = 1;
-    this->maxHealthPoints = 100;
+    this->maxHealthPoints = 1000;
     this->healthPoints = maxHealthPoints;
     this->level = 1;
     this->gold = 30;

@@ -18,10 +18,10 @@ void BossUnit::Initialize()
 {
     this->image = new QImage(":/graphics/dragon.png");
     this->frameSize = QSize(120, 87);
-    this->maxHealthPoints = 300;
+    this->maxHealthPoints = 1000;
     this->healthPoints = maxHealthPoints;
     this->moving = false;
-    this->damage = 1;
+    this->damage = 2;
 
     this->frames.insert(0, 4);
     this->frames.insert(1, 4);
