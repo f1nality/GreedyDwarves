@@ -90,7 +90,7 @@ bool GameCanvas::isPointInArea(int x, int y, int rect_x, int rect_y, QSize rect_
     return (x >= rect_x && y >= rect_y && x < rect_x + rect_size.width() && y < rect_y + rect_size.height());
 }
 
-void GameCanvas::drawGameUnits()
+void GameCanvas::drawGameUnits(QPainter &painter)
 {
     foreach (GameUnit *unit, gameLogic->getGameUnits())
     {
@@ -129,7 +129,7 @@ void GameCanvas::drawMinersCount(QPainter &painter, MinerUnit *unit)
     painter.fillRect((int)unit->getX(), ROAD_Y - unit->getHeight() - (int)unit->getY() - 16, 16, 16, QBrush(Qt::black));
     painter.setPen(QPen(Qt::white));
     painter.setFont(QFont("Courier New", 8));
-    painter.drawText((int)unit->getX(), ROAD_Y - unit->getHeight() - (int)unit->getY() - 16, 16, 16, Qt::AlignCenter, QString("%1").arg(minerUnit->getMiners()), NULL);
+    painter.drawText((int)unit->getX(), ROAD_Y - unit->getHeight() - (int)unit->getY() - 16, 16, 16, Qt::AlignCenter, QString("%1").arg(unit->getMiners()), NULL);
 }
 
 void GameCanvas::drawCooldownButtons(QPainter &painter)
@@ -151,7 +151,7 @@ void GameCanvas::drawGold(QPainter &painter)
     painter.drawText(640 - 110 - 10 + 6, 10 + 7, 75, 14, Qt::AlignCenter, QString("%1").arg(gameLogic->getGold()), NULL);
 }
 
-void GameCanvas::onGameUpdated(QPainter &painter)
+void GameCanvas::onGameUpdated()
 {
     repaint();
 }
