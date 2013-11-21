@@ -25,7 +25,8 @@ SOURCES += main.cpp\
     bossunit.cpp \
     uicooldownbutton.cpp \
     minerunit.cpp \
-    bull.cpp
+    bull.cpp \
+    skeletonarcher.cpp
 
 HEADERS  += mainwindow.h \
     gameunit.h \
@@ -39,7 +40,8 @@ HEADERS  += mainwindow.h \
     bossunit.h \
     uicooldownbutton.h \
     minerunit.h \
-    bull.h
+    bull.h \
+    skeletonarcher.h
 
 FORMS    += mainwindow.ui
 

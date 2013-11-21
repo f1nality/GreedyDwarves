@@ -127,7 +127,8 @@ void GameLogic::ProcessEvents()
         }
         else
         {
-            Bull *enemy = new Bull(boss->getX() - 58, 0);
+           // Bull *enemy = new Bull(boss->getX() - 58, 0);
+            SkeletonArcher *enemy = new SkeletonArcher(boss->getX() - 58, 0);
 
             enemy->setDirectionForward(false);
 

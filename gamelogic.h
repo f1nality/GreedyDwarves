@@ -12,6 +12,7 @@
 #include "uicooldownbutton.h"
 #include "minerunit.h"
 #include "bull.h"
+#include "skeletonarcher.h"
 
 class GameLogic : public QObject
 {
