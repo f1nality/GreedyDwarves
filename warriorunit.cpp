@@ -3,6 +3,7 @@
 WarriorUnit::WarriorUnit()
 {
     this->damage = 0;
+    this->range = 0;
 }
 
 int WarriorUnit::getRange()
@@ -14,22 +15,7 @@ int WarriorUnit::getDamage()
 {
     return damage;
 }
-/*
-int WarriorUnit::getState()
-{
-    return isAttacking;
-}
 
-void WarriorUnit::startFight()
-{
-    isAttacking = true;
-}
-
-void WarriorUnit::stopFight()
-{
-    isAttacking = false;
-}
-*/
 void WarriorUnit::attack(WarriorUnit *enemyUnit)
 {
     setAttacking(true);

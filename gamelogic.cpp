@@ -90,9 +90,26 @@ void GameLogic::fight()
         WarriorUnit *frontPlayerAUnit = playerAWarriorUnits.front();
         WarriorUnit *frontPlayerBUnit = playerBWarriorUnits.front();
 
-        if (frontPlayerBUnit->getX() - (frontPlayerAUnit->getX() + frontPlayerAUnit->getWidth()) < 2)
+        if (frontPlayerBUnit->getX() - (frontPlayerAUnit->getX() + frontPlayerAUnit->getWidth()) < frontPlayerAUnit->getRange())
         {
             frontPlayerAUnit->attack(frontPlayerBUnit);
+
+            if (frontPlayerBUnit->getHealthPoints() < 0)
+            {
+                gameUnits.removeOne(frontPlayerBUnit);
+                playerBWarriorUnits.removeOne(frontPlayerBUnit);
+
+                BossUnit *bossUnit = dynamic_cast<BossUnit *>(frontPlayerBUnit);
+
+                if (bossUnit)
+                {
+                    boss = NULL;
+                }
+            }
+        }
+
+        if (frontPlayerBUnit->getX() - (frontPlayerAUnit->getX() + frontPlayerAUnit->getWidth()) < frontPlayerBUnit->getRange())
+        {
             frontPlayerBUnit->attack(frontPlayerAUnit);
 
             if (frontPlayerAUnit->getHealthPoints() < 0)
@@ -108,19 +125,6 @@ void GameLogic::fight()
 
                     base = NULL;
                     miner = NULL;
-                }
-            }
-
-            if (frontPlayerBUnit->getHealthPoints() < 0)
-            {
-                gameUnits.removeOne(frontPlayerBUnit);
-                playerBWarriorUnits.removeOne(frontPlayerBUnit);
-
-                BossUnit *bossUnit = dynamic_cast<BossUnit *>(frontPlayerBUnit);
-
-                if (bossUnit)
-                {
-                    boss = NULL;
                 }
             }
         }
