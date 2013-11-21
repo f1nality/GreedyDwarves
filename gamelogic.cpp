@@ -45,6 +45,46 @@ int GameLogic::getGold()
 
 void GameLogic::ProcessEvents()
 {
+    fight();
+
+    move();
+    mine();
+
+    bossTurn();
+
+    foreach (GameUnit *unit, gameUnits)
+    {
+        unit->nextFrame();
+    }
+
+    foreach (UICooldownButton *button, cooldownButtons)
+    {
+        button->updateCooldownElapsedIfNeeded();
+    }
+
+    emit GameUpdated();
+}
+
+void GameLogic::mine()
+{
+    if (timeElapsedSinceLastMine < timePerMine)
+    {
+        ++timeElapsedSinceLastMine;
+    }
+    else
+    {
+        base->setGold(base->getGold() + base->getMiners());
+        timeElapsedSinceLastMine = 0;
+    }
+}
+
+void GameLogic::addCooldownButton(UICooldownButton *button)
+{
+    cooldownButtons.append(button);
+}
+
+void GameLogic::fight()
+{
     if (!playerAWarriorUnits.isEmpty() && !playerBWarriorUnits.isEmpty())
     {
         WarriorUnit *frontPlayerAUnit = playerAWarriorUnits.front();
@@ -86,6 +126,10 @@ void GameLogic::ProcessEvents()
         }
     }
 
+}
+
+void GameLogic::move()
+{
     WarriorUnit *nextUnit = NULL;
 
     foreach (WarriorUnit *unit, playerAWarriorUnits)
@@ -110,15 +154,10 @@ void GameLogic::ProcessEvents()
         nextUnit = unit;
     }
 
-    if (timeElapsedSinceLastMine < timePerMine)
-    {
-        ++timeElapsedSinceLastMine;
-    }
-    else
-    {
-        mine();
-    }
+}
 
+void GameLogic::bossTurn()
+{
     if (boss)
     {
         if (timeElapsedSinceLastSpawn < timePerSpawn)
@@ -138,29 +177,6 @@ void GameLogic::ProcessEvents()
             timeElapsedSinceLastSpawn = 0;
         }
     }
-
-    foreach (GameUnit *unit, gameUnits)
-    {
-        unit->nextFrame();
-    }
-
-    foreach (UICooldownButton *button, cooldownButtons)
-    {
-        button->updateCooldownElapsedIfNeeded();
-    }
-
-    emit GameUpdated();
-}
-
-void GameLogic::mine()
-{
-    base->setGold(base->getGold() + base->getMiners());
-    timeElapsedSinceLastMine = 0;
-}
-
-void GameLogic::addCooldownButton(UICooldownButton *button)
-{
-    cooldownButtons.append(button);
 }
 
 void GameLogic::unitOfTimeElapsed()

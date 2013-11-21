@@ -38,6 +38,9 @@ private:
     static const size_t timePerSpawn = 200;
     void mine();
     void addCooldownButton(UICooldownButton *button);
+    void fight();
+    void move();
+    void bossTurn();
 public slots:
     void unitOfTimeElapsed();
 private slots:
