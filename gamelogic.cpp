@@ -18,13 +18,16 @@ GameLogic::GameLogic()
     gameUnits.append(boss);
     playerBWarriorUnits.append(boss);
 
-    UICooldownButton *swordsManButton = new UICooldownButton(QImage(":/graphics/swordsman.png"), QSize(32, 32), SwordsMan::cooldown);
-    UICooldownButton *minerButton = new UICooldownButton(QImage(":/graphics/miner.png"), QSize(40, 39), MinerUnit::cooldown);
+    UICooldownButton *swordsManButton = new UICooldownButton("SwordsMan", QImage(":/graphics/swordsman.png"), QSize(32, 32), SwordsMan::cooldown);
+    UICooldownButton *axeManButton = new UICooldownButton("AxeMan", QImage(":/graphics/axeman.png"), QSize(32, 32), AxeMan::cooldown);
+    UICooldownButton *minerButton = new UICooldownButton("MinerUnit", QImage(":/graphics/miner.png"), QSize(40, 39), MinerUnit::cooldown);
 
     QObject::connect(swordsManButton, SIGNAL(pressed()), this, SLOT(buyUnit()));
+    QObject::connect(axeManButton, SIGNAL(pressed()), this, SLOT(buyUnit()));
     QObject::connect(minerButton, SIGNAL(pressed()), this, SLOT(buyMiner()));
 
     addCooldownButton(swordsManButton);
+    addCooldownButton(axeManButton);
     addCooldownButton(minerButton);
 }
 
@@ -200,21 +203,27 @@ void GameLogic::unitOfTimeElapsed()
 
 void GameLogic::buyUnit()
 {
-    if (base->getGold() < SwordsMan::cost)
-    {
-        return;
-    }
-
-    base->setGold(base->getGold() - SwordsMan::cost);
-
-    SwordsMan *swordsMan = new SwordsMan(100, 0);
-
-    gameUnits.append(swordsMan);
-    playerAWarriorUnits.insert(playerAWarriorUnits.length() - 1, swordsMan);
-
+    WarriorUnit *unit = NULL;
     UICooldownButton *button = (UICooldownButton *)sender();
 
-    button->resetCooldownElapsed();
+    if (button->getType() == "SwordsMan" && base->getGold() >= SwordsMan::cost)
+    {
+        base->setGold(base->getGold() - SwordsMan::cost);
+        unit = new SwordsMan(100, 0);
+    }
+    else if (button->getType() == "AxeMan" && base->getGold() >= AxeMan::cost)
+    {
+        base->setGold(base->getGold() - AxeMan::cost);
+        unit = new AxeMan(100, 0);
+    }
+
+    if (unit != NULL)
+    {
+        gameUnits.append(unit);
+        playerAWarriorUnits.insert(playerAWarriorUnits.length() - 1, unit);
+
+        button->resetCooldownElapsed();
+    }
 }
 
 void GameLogic::buyMiner()

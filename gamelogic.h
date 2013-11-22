@@ -3,9 +3,11 @@
 
 #include <QList>
 #include <QTimer>
+#include <QSignalMapper>
 #include "gameunit.h"
 #include "movableunit.h"
 #include "swordsman.h"
+#include "axeman.h"
 #include "baseunit.h"
 #include "bossunit.h"
 #include "warriorunit.h"

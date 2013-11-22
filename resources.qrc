@@ -9,5 +9,6 @@
         <file alias="dragon.png">graphics/dragon.png</file>
         <file alias="bull.png">graphics/bull.png</file>
         <file alias="skeletonarcher.png">graphics/skeletonarcher.png</file>
+        <file alias="axeman.png">graphics/axeman.png</file>
     </qresource>
 </RCC>

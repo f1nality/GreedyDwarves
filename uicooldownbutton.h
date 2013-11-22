@@ -9,7 +9,8 @@ class UICooldownButton : public QWidget
 {
     Q_OBJECT
 public:
-    UICooldownButton(QImage iconImage, QSize iconImageSize, int cooldownOverall);
+    UICooldownButton(QString type, QImage iconImage, QSize iconImageSize, int cooldownOverall);
+    QString getType();
     QImage *getBackgroundImage();
     static QSize getBackgroundImageSize();
     int getFrame();
@@ -19,6 +20,7 @@ public:
     void updateCooldownElapsedIfNeeded();
     void resetCooldownElapsed();
 private:
+    QString type;
     QImage *backgroundImage;
     int frame;
     QImage iconImage;

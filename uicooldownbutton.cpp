@@ -1,7 +1,8 @@
 #include "uicooldownbutton.h"
 
-UICooldownButton::UICooldownButton(QImage iconImage, QSize iconImageSize, int cooldownOverall)
+UICooldownButton::UICooldownButton(QString type, QImage iconImage, QSize iconImageSize, int cooldownOverall)
 {
+    this->type = type;
     this->backgroundImage = new QImage(getBackgroundImageSize().width() * 2, getBackgroundImageSize().height(), QImage::Format_ARGB32);
     this->frame = 0;
     this->iconImage = iconImage;
@@ -13,6 +14,11 @@ UICooldownButton::UICooldownButton(QImage iconImage, QSize iconImageSize, int co
     convertToGrayScale(this->iconImageGrayscale);
 
     repaint();
+}
+
+QString UICooldownButton::getType()
+{
+    return type;
 }
 
 QImage *UICooldownButton::getBackgroundImage()
