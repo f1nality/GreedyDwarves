@@ -8,6 +8,6 @@
         <file alias="miner.png">graphics/miner.png</file>
         <file alias="dragon.png">graphics/dragon.png</file>
         <file alias="bull.png">graphics/bull.png</file>
-        <file alias="archer.png">graphics/archer.png</file>
+        <file alias="skeletonarcher.png">graphics/skeletonarcher.png</file>
     </qresource>
 </RCC>
